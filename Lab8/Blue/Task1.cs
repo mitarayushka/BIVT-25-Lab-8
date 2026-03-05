@@ -5,37 +5,30 @@
         public class Response(string name)
         {
             readonly string name = name;
-            protected int votes = 0;
 
             public string Name => name;
-            public int Votes
-            {
-                get => votes;
-                set
-                {
-                    votes = Votes;
-                }
-            }
+            public int Votes { get; protected set; }
 
             virtual public int CountVotes(Response[] responses)
             {
-                this.votes = responses.Count(Same);
+                this.Votes = responses.Count(Same);
 
                 for (int i = 0; i < responses.Length; i += 1)
                 {
                     ref var r = ref responses[i];
-                    if (Same(r)) { r.votes = this.votes; }
+                    if (null == r) { continue; }
+                    if (Same(r)) { r.Votes = this.Votes; }
                 }
 
-                return this.votes;
+                return this.Votes;
             }
 
             virtual public void Print() => Console.WriteLine(this.ToString());
 
-            bool Same(Response other) => this.name == other.name;
+            bool Same(Response other) => null != other && this.name == other.name;
 
             override public string ToString() =>
-                $"Response{{name: \"{name}\", votes: {votes}}}";
+                $"Response{{name: \"{name}\", Votes: {Votes}}}";
         }
 
         public class HumanResponse(string n, string surname) : Response(n)
@@ -43,25 +36,25 @@
             readonly string surname = surname;
             public string Surname => surname;
 
-            bool Same(Response other) => this.Name == other.Name && this.surname == ((HumanResponse)other).Surname;
+            bool Same(Response other) => null != other && this.Name == other.Name && this.surname == ((HumanResponse)other).Surname;
 
             override public int CountVotes(Response[] responses)
             {
-                this.votes = responses.Count(Same);
+                this.Votes = responses.Count(Same);
 
                 for (int i = 0; i < responses.Length; i += 1)
                 {
-                    ref var r = ref responses[i];
-                    if (Same(r)) { r.Votes = this.votes; }
+                    if (null == responses[i]) { continue; }
+                    if (Same((HumanResponse)responses[i])) { ((HumanResponse)responses[i]).Votes = this.Votes; }
                 }
 
-                return this.votes;
+                return this.Votes;
             }
 
             override public void Print() => Console.WriteLine(this.ToString());
 
             override public string ToString() =>
-                $"Response{{name: \"{Name}\", surname: \"{Surname}\", votes: {votes}}}";
+                $"Response{{name: \"{Name}\", surname: \"{Surname}\", Votes: {Votes}}}";
 
         }
     }

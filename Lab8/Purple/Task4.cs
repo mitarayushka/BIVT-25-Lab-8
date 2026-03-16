@@ -165,26 +165,23 @@ namespace Lab8.Purple
                     }
                 }
 
-                Sportsman[] skimen = new Sportsman[count1];
-                Sportsman[] skiwomen = new Sportsman[count2];
+                men = new SkiMan[count1];
+                women = new SkiWoman[count2];
                 count1 = 0;
                 count2 = 0;
-                for (int i = 0; i < _sportsmen.Length; i++)
+                for(int i = 0; i < _sportsmen.Length; i++)
                 {
-                    if (_sportsmen[i] is SkiMan)
+                    if(_sportsmen[i] is SkiMan)
                     {
-                        skimen[count1] = _sportsmen[i];
+                        men[count1] = _sportsmen[i];
                         count1++;
                     }
                     else
                     {
-                        skiwomen[count2] = _sportsmen[i];
+                        women[count2] = _sportsmen[i];
                         count2++;
                     }
                 }
-
-                men = skimen;
-                women = skiwomen;
 
             }
 

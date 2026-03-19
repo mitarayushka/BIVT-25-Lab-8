@@ -99,7 +99,7 @@ namespace Lab8.Blue
                 get
                 {
                     if (_sportsman == null || _sportsman.Length == 0)
-                        return 0;
+                        return 18;
                     int top = _sportsman[0].Place;
                     for (int i = 1; i < _sportsman.Length; i++)
                     {
@@ -114,7 +114,7 @@ namespace Lab8.Blue
             public Team(string name)
             {
                 _name = name;
-                _sportsman = new Sportsman[6];
+                _sportsman = new Sportsman[0];
                 _count = 0;
             }
 
@@ -126,6 +126,7 @@ namespace Lab8.Blue
                 {
                     return;
                 }
+                Array.Resize(ref _sportsman, _count + 1);
                 _sportsman[_count] = name;
                 _count++;
             }
@@ -172,27 +173,17 @@ namespace Lab8.Blue
                 {
                     return null;
                 }
-                Team manChampion = null;
-                Team womanChampion = null;
+
+                Team champion = null;
                 for (int i = 0; i < teams.Length; i++)
                 {
-                    if (teams[i] is ManTeam)
+                    if (champion == null || teams[i].GetTeamStrength() > champion.GetTeamStrength())
                     {
-                        if (manChampion == null || teams[i].GetTeamStrength() > manChampion.GetTeamStrength())
-                        {
-                            manChampion = teams[i];
-                        }
-                    }
-                    if (teams[i] is WomanTeam)
-                    {
-                        if (womanChampion == null || teams[i].GetTeamStrength() > womanChampion.GetTeamStrength())
-                        {
-                            womanChampion = teams[i];
-                        }
+                        champion = teams[i]; 
                     }
                 }
 
-                return null;
+                return champion;
 
             }
 
@@ -213,7 +204,7 @@ namespace Lab8.Blue
                 {
                     return 0;
                 }
-               int sumSportsman = 0;
+                double sumSportsman = 0;
                 for (int i = 0; i < Sportsmen.Length; i++)
                 {
                     sumSportsman += Sportsmen[i].Place;

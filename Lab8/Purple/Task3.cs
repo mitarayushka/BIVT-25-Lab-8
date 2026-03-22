@@ -1,7 +1,75 @@
-﻿namespace Lab7.Purple
+﻿namespace Lab8.Purple
 {
   public class Task3
   {
+    public abstract class Skating
+    {
+      protected Participant[] _participants;
+      protected double[] _moods;
+
+      private int _evaluated;
+
+      public Participant[] Participants => _participants;
+      public double[] Moods => _moods;
+
+      public Skating(double[] moods)
+      {
+	_participants = new Participant[0];
+	_evaluated = 0;
+	_moods = (double[])moods.Clone();
+	ModificateMood();
+      }
+
+      protected abstract void ModificateMood();
+
+      public void Evaluate(double[] marks)
+      {
+	for (int i = 0; i < marks.Length; i++){
+	  _participants[_evaluated].Evaluate(marks[i] * _moods[i]);
+	}
+	_evaluated++;
+      }
+
+      public void Add(Participant p)
+      {
+	_participants = _participants.Append(p).ToArray();
+      }
+
+      public void Add(Participant[] ps)
+      {
+	foreach (Participant p in ps)
+	{
+	  _participants = _participants.Append(p).ToArray();
+	}
+      }
+    }
+
+
+    public class FigureSkating : Skating
+    {
+      public FigureSkating(double[] moods) : base(moods){}
+
+      protected override void ModificateMood()
+      {
+	for (int i = 0; i < 7; i++)
+	{
+	  _moods[i] += (i+1)/10.0;
+	}
+      }
+    }
+
+    public class IceSkating : Skating
+    {
+      public IceSkating(double[] moods) : base(moods){}
+
+      protected override void ModificateMood()
+      {
+	for (int i = 0; i < 7; i++)
+	{
+	  _moods[i] += _moods[i]*(1+i)/100.0;
+	}
+      }
+    }
     public struct Participant
     {
       private string _name; /* basic fields */
@@ -16,7 +84,7 @@
 
       public string Name => _name; /* getters */
       public string Surname => _surname;
-      public double[] Marks => (double[])_marks.Clone(); //or _marks.ToArray();
+      public double[] Marks => _marks.ToArray();
       public int[] Places => (int[])_places.Clone();
       //public int[] Places_unsafe => _places;
       public int TopPlace => _topPlace;
@@ -25,16 +93,8 @@
       
 
       public void Evaluate(double result){
-	/*double[] marks = new double[Marks.Length+1];
-	for (int i = 0; i < Marks.Length; i++){
-	  marks[i] = _marks[i];
-	}
-	marks[Marks.Length] = result;
-      
-	_marks = marks;*/
 	if (_judges >= 7) return;
-	Array.Resize(ref _marks, _marks.Length + 1);
-	_marks[_marks.Length - 1] = result;
+	_marks[_judges] = result;
 	_judges++;
 	_calculateTotalMark();
       }
@@ -44,7 +104,7 @@
 	this._name = _name;
 	this._surname = _surname;
 	_judges = 0;
-	_marks = new double[0];
+	_marks = new double[7];
 	_places = new int[7];
 	_totalMark = -1.0; //violation of incapsulation principe :(
 	_score = 0;
@@ -86,8 +146,6 @@
 
       public static void Sort(Participant[] array)
       {
-	//Array.Sort(array, (left, right) => right.TotalMark.CompareTo(left.TotalMark));
-	//array = array.OrderBy(p => -p.TotalMark).ToArray();
 	_sortBy(ref array, (p => -p.Marks.Sum()));
 	_sortBy(ref array, (p => -p.TotalMark));
 	_sortBy(ref array, (p => p.Places.Sum()));
@@ -101,8 +159,6 @@
       {
 	for (int i = 0; i < 7; i++)
 	{
-	  //Array.Sort(participants, (left, right) => right._marks[i].CompareTo(left._marks[i]));
-	  //participants = participants.OrderBy(p => p.Marks[i]).ToArray();
 	  _sortBy(ref participants, (p => -p.Marks[i]));
 	  for (int j = 0; j < participants.Length; j++)
 	  {

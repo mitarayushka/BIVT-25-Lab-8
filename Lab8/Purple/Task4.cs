@@ -1,8 +1,8 @@
-﻿namespace Lab7.Purple
+﻿namespace Lab8.Purple
 {
   public class Task4
   {
-    public struct Sportsman
+    public class Sportsman
     {
       private string _name;
       private string _surname;
@@ -29,29 +29,32 @@
       {
 	Console.Write($"Name: {Name}\nSurname: {Surname}\nTime: {Time}\n\n");
       }
+
+      public static void Sort(Sportsman[] array)
+      {
+	array = array.OrderBy((x => x.Time)).ToArray();
+      }
     }
 
-    public struct Group
+    public class SkiMan : Sportsman
+    {
+      public SkiMan(string name, string surname) : base (name, surname) {}
+      public SkiMan(string name, string surname, double time) : base (name, surname) {Run(time);}
+    }
+
+    public class SkiWoman : Sportsman
+    {
+      public SkiWoman(string name, string surname) : base (name, surname) {}
+      public SkiWoman(string name, string surname, double time) : base (name, surname) {Run(time);}
+    }
+
+    public class Group
     {
       private string _name;
       private Sportsman[] _sportsmen;
 
       public string Name => _name;
       public Sportsman[] Sportsmen => _sportsmen;
-      
-      //public Sportsman[] Sportsmen => _sportsmen.ToArray();
-      
-      /*
-      public string Name => _name;
-      public Sportsman[] Sportsmen { get {
-	Sportsman[] s = new Sportsman[_sportsmen.Length];
-	for (int i = 0; i < _sportsmen.Length; i++){
-	  s[i] = _sportsmen[i];
-	}
-	return s;
-        }
-      }
-      */
 
       public Group(string name)
       {
@@ -62,7 +65,6 @@
       {
 	_name = group.Name;
 	_sportsmen = (Sportsman[])group.Sportsmen.Clone();
-	Sort();
       }
 
       private void Append(ref Sportsman[] s, Sportsman sportsman)
@@ -108,22 +110,7 @@
 
       public void Sort()
       {
-	int pos = 1;
-	while (pos < _sportsmen.Length)
-	{
-	  if (_sportsmen[pos].Time >= _sportsmen[pos-1].Time)
-	  {
-	    pos++;
-	  }
-	  else
-	  {
-	    (_sportsmen[pos], _sportsmen[pos-1]) = (_sportsmen[pos-1], _sportsmen[pos]);
-	    if (pos > 1)
-	    {
-	      pos--;
-	    }
-	  }
-	}
+	_sportsmen = _sportsmen.OrderBy((x => x.Time)).ToArray();
       }
 
       public static Group Merge(Group group1, Group group2)
@@ -141,6 +128,56 @@
 	foreach (Sportsman s in Sportsmen)
 	{
 	  s.Print();
+	}
+      }
+
+      public void Split(out Sportsman[] men, out Sportsman[] women)
+      {
+	men = new Sportsman[0];
+	women = new Sportsman[0];
+
+	foreach (Sportsman s in _sportsmen)
+	{
+	  if (s is SkiMan)
+	  {
+	    men = men.Append(s).ToArray();
+	  }
+	  else
+	  {
+	    women = women.Append(s).ToArray();
+	  }
+	}
+      }
+
+      public void Shuffle()
+      {
+	Sort();
+	Split(out Sportsman[] men, out Sportsman[] women);
+	Sportsman[] s1, s2;
+	if (men.Length == 0 || women.Length == 0) return;
+	if (men[0].Time > women[0].Time)
+	{
+	  s1 = women.ToArray();
+	  s2 = men.ToArray();
+	}
+	else
+	{
+	  s1 = men.ToArray();
+	  s2 = women.ToArray();
+	}
+	int done = 0;
+	int done1 = 0;
+	int done2 = 0;
+	while (done < _sportsmen.Length)
+	{
+	  if (done1 < s1.Length)
+	  {
+	    _sportsmen[done++] = s1[done1++];
+	  }
+	  if (done2 < s2.Length)
+	  {
+	    _sportsmen[done++] = s2[done2++];
+	  }
 	}
       }
     }

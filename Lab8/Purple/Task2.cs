@@ -1,4 +1,4 @@
-﻿namespace Lab7.Purple
+﻿namespace Lab8.Purple
 {
   public class Task2
   {
@@ -9,6 +9,7 @@
       private int[] _marks;
       private int _distance;
       private int _result;
+      private int _target;
 
       public string Name => _name; /* getters */
       public string Surname => _surname;
@@ -18,9 +19,10 @@
       public int Result => _result == -1 ? _calculateResult() : _calculateResult(); 
       /* setters with updating _totalScore field function */
 
-      public void Jump(int distance, int[] marks){
+      public void Jump(int distance, int[] marks, int target){
 	_marks = (int[])marks.Clone();
 	_distance = distance;
+	_target = target;
 	_calculateResult();
       }
 
@@ -30,6 +32,7 @@
 	this._surname = _surname;
 	_marks = new int[5];
 	_result = -1; //violation of incapsulation principe :(
+	_target = 120;
       }
 
       /* private helper for optimizing _totalScore calculation */
@@ -49,7 +52,7 @@
 	    sum += _marks[i];
 	  }
 	}
-	sum = Math.Max(0, sum + 60 + (Distance-120)*2);
+	sum = Math.Max(0, sum + 60 + (Distance-_target)*2);
 	_result = sum;
 	return sum;
       }
@@ -60,6 +63,62 @@
       }
 
       public static void Sort(Participant[] array) { Array.Sort(array, (left, right) => right.Result.CompareTo(left.Result)); } 
+    }
+
+    public abstract class SkiJumping
+    {
+      private string _name;
+      private int _standard;
+      private Participant[] _participants;
+
+      private int _jumped;
+
+      public string Name => _name;
+      public int Standard => _standard;
+      public Participant[] Participants => _participants;
+    
+      public SkiJumping(string name, int standard)
+      {
+	_name = name;
+	_standard = standard;
+	_participants = new Participant[0];
+	_jumped = 0;
+      }
+
+      public void Add(Participant p)
+      {
+	_participants = _participants.Append(p).ToArray();
+      }
+
+      public void Add(Participant[] ps)
+      {
+	foreach (Participant p in ps)
+	{
+	  _participants = _participants.Append(p).ToArray();
+	}
+      }
+
+      public void Jump(int distance, int[] marks)
+      {
+	_participants[_jumped].Jump(distance, marks, Standard);
+	_jumped++;
+      }
+
+      public void Print()
+      {
+	Console.Write($"SkiJumping:\n|Name: {Name}\n|Standard: {Standard}\nParticipants count: {Participants.Length}\n");
+      }
+
+    }
+
+    public class ProSkiJumping : SkiJumping
+    {
+      public ProSkiJumping() : base("150m", 150){}
+    }
+
+    public class JuniorSkiJumping : SkiJumping
+    {
+      public JuniorSkiJumping() : base("100m", 100){}
     }
   }
 }

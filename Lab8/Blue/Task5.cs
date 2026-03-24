@@ -77,7 +77,7 @@ namespace Lab8.Blue
             {
                 get
                 {
-                    if (_Count == 0) return int.MaxValue;
+                    if (_Count == 0) return 18;
                     int best = _Sportsmen[0].Place;
                     for (int i = 1; i < _Count; i++)
                     {
@@ -98,10 +98,10 @@ namespace Lab8.Blue
             protected abstract double GetTeamStrength();
 
 
-            // public static Team GetChampion(Team[] teams)
-            // {
-                
-            // }
+            public static Team GetChampion(Team[] teams)
+            {
+                return teams?.MaxBy(t => t.GetTeamStrength());
+            }
             public void Add(Sportsman sportsman)
             {
                 if (_Count < 6)
@@ -146,11 +146,11 @@ namespace Lab8.Blue
             public ManTeam(string Name):base(Name){}
             protected override double GetTeamStrength()
             {
-                if (_Count > 0)return 0;
+                if (_Count == 0)return 0;
                 
                 int place=Sportsmen.Sum(x=>x.Place);
                 double aver = (double) place / _Count;
-                if(aver==0)return .0;
+                if(aver==0)return 0;
                 return 100.0/aver;
                 
             }
@@ -161,10 +161,8 @@ namespace Lab8.Blue
 
             protected override double GetTeamStrength()
             {
-                if (_Count > 0)
-                {
-                    return .0;
-                }
+                if (_Count == 0) return 0;
+                
                 int placeSum=Sportsmen.Sum(x=>x.Place);
                 int placePow=Sportsmen.Aggregate(1,(a,b)=>a*b.Place);
                 return 100.0*placeSum*((double)_Count/placePow);

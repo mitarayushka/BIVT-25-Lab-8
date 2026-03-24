@@ -1,8 +1,8 @@
-﻿//using System.Reflection;
-//using System.Text.Json;
+﻿// using System.Reflection;
+// using System.Text.Json;
 
-//namespace Lab8Test.Blue
-//{
+// namespace Lab8Test.Blue
+// {
 //    [TestClass]
 //    public sealed class Task2
 //    {
@@ -235,4 +235,4 @@
 //                new Lab8.Blue.Task2.WaterJump5m("B", 1000);
 //        }
 //    }
-//}
+// }

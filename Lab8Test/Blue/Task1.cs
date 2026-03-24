@@ -1,8 +1,8 @@
-﻿//using System.Reflection;
-//using System.Text.Json;
+﻿// using System.Reflection;
+// using System.Text.Json;
 
-//namespace Lab8Test.Blue
-//{
+// namespace Lab8Test.Blue
+// {
 //    [TestClass]
 //    public sealed class Task1
 //    {
@@ -16,8 +16,7 @@
 //        [TestInitialize]
 //        public void LoadData()
 //        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory())
-//                .Parent.Parent.Parent.FullName;
+//            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
 
 //            folder = Path.Combine(folder, "Lab8Test", "Blue");
 
@@ -166,4 +165,4 @@
 //            }
 //        }
 //    }
-//}
+// }

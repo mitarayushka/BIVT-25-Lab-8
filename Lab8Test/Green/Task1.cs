@@ -213,4 +213,3 @@ namespace Lab8Test.Green
         }
     }
 }
-

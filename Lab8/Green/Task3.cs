@@ -1,202 +1,244 @@
-using System;
-using System.Linq;
+using System.Reflection;
+using System.Security.AccessControl;
+using System.Text.Json;
 
-namespace Lab8.Green
+namespace Lab8Test.Green
 {
-    public class Task3
+    [TestClass]
+    public sealed class Task3
     {
-        public class Student
+        record InputRow(string Name, string Surname, int[] Marks);
+        record OutputRow(string Name, string Surname, double AverageMark, bool IsExpelled, int ID);
+
+        private InputRow[] _input;
+        private OutputRow[] _outputOriginal;
+        private OutputRow[] _outputSorted;
+        private Lab8.Green.Task3.Student[] _students;
+
+        [TestInitialize]
+        public void LoadData()
         {
-            private string _name;
-            private string _surname;
-            private int[] _marks;
-            private bool _expelled;
-            private int _id;
+            var folder = Directory.GetParent(Directory.GetCurrentDirectory())
+                .Parent.Parent.Parent.FullName;
+            folder = Path.Combine(folder, "Lab8Test", "Green");
 
-            private static int _nextid;
+            var input = JsonSerializer.Deserialize<JsonElement>(
+                File.ReadAllText(Path.Combine(folder, "input.json")))!;
+            var output = JsonSerializer.Deserialize<JsonElement>(
+                File.ReadAllText(Path.Combine(folder, "output.json")))!;
 
-            static Student()
+            _input = input.GetProperty("Task3").Deserialize<InputRow[]>();
+            _outputOriginal = output.GetProperty("Task3").GetProperty("Original").Deserialize<OutputRow[]>();
+            _outputSorted = output.GetProperty("Task3").GetProperty("Sorted").Deserialize<OutputRow[]>();
+
+            _students = new Lab8.Green.Task3.Student[_input.Length];
+        }
+        [TestMethod]
+        public void Test_00_OOP()
+        {
+            var type = typeof(Lab8.Green.Task3.Student);
+
+            Assert.AreEqual(type.GetFields(BindingFlags.Public | BindingFlags.Instance).Length, 0);
+            Assert.IsTrue(type.IsClass);
+
+            Assert.IsTrue(type.GetProperty("Name")?.CanRead ?? false);
+            Assert.IsTrue(type.GetProperty("Surname")?.CanRead ?? false);
+            Assert.IsTrue(type.GetProperty("AverageMark")?.CanRead ?? false);
+            Assert.IsTrue(type.GetProperty("IsExpelled")?.CanRead ?? false);
+            Assert.IsTrue(type.GetProperty("Marks")?.CanRead ?? false);
+            Assert.IsTrue(type.GetProperty("ID")?.CanRead ?? false);
+
+            Assert.IsFalse(type.GetProperty("Name")?.CanWrite ?? true);
+            Assert.IsFalse(type.GetProperty("Surname")?.CanWrite ?? true);
+            Assert.IsFalse(type.GetProperty("AverageMark")?.CanWrite ?? true);
+            Assert.IsFalse(type.GetProperty("IsExpelled")?.CanWrite ?? true);
+            Assert.IsFalse(type.GetProperty("Marks")?.CanWrite ?? true);
+            Assert.IsFalse(type.GetProperty("ID")?.CanWrite ?? true);
+
+            Assert.IsNotNull(type.GetConstructor(
+                BindingFlags.Instance | BindingFlags.Public,
+                null,
+                new[] { typeof(string), typeof(string) },
+                null));
+
+            Assert.IsNotNull(type.GetMethod("Exam", BindingFlags.Instance | BindingFlags.Public));
+            Assert.IsNotNull(type.GetMethod("Restore", BindingFlags.Instance | BindingFlags.Public));
+            Assert.IsNotNull(type.GetMethod("SortByAverageMark", BindingFlags.Static | BindingFlags.Public));
+            Assert.IsNotNull(type.GetMethod("Print", BindingFlags.Instance | BindingFlags.Public));
+
+            Assert.AreEqual(0, type.GetFields().Count(f => f.IsPublic));
+            Assert.AreEqual(type.GetProperties().Count(f => f.PropertyType.IsPublic), 6);
+            Assert.AreEqual(type.GetConstructors().Count(f => f.IsPublic), 1);
+            Assert.AreEqual(type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Length, 13);
+
+            var commission = typeof(Lab8.Green.Task3.Commission);
+            Assert.IsTrue(commission.IsClass);
+
+            Assert.IsNotNull(commission.GetMethod("Sort", BindingFlags.Static | BindingFlags.Public));
+            Assert.IsNotNull(commission.GetMethod("Expel", BindingFlags.Static | BindingFlags.Public));
+            Assert.IsNotNull(commission.GetMethod("Restore", BindingFlags.Static | BindingFlags.Public));
+
+            Assert.AreEqual(0, commission.GetFields().Count(f => f.IsPublic));
+            Assert.AreEqual(commission.GetProperties().Count(f => f.PropertyType.IsPublic), 0);
+            Assert.AreEqual(commission.GetConstructors().Count(f => f.IsPublic), 1);
+            Assert.AreEqual(type.GetMethods(BindingFlags.Instance | BindingFlags.Public).Length, 13);
+        }
+
+        [TestMethod]
+        public void Test_02_CreateStudents()
+        {
+            InitStudents();
+            for (int i = 0; i < _students.Length; i++)
             {
-                _nextid = 1;
-            }
-
-            public Student(string name, string surname)
-            {
-                _name = name;
-                _surname = surname;
-                _marks = new int[3];
-                _expelled = false;
-                _id = _nextid++;
-            }
-
-            public int ID => _id;
-            public string Name => _name ?? string.Empty;
-            public string Surname => _surname ?? string.Empty;
-            public bool IsExpelled => _expelled;
-            public int[] Marks => _marks?.ToArray() ?? new int[0];
-
-            public double AverageMark
-            {
-                get
-                {
-                    if (_marks == null || _marks.Length == 0) return 0;
-
-                    int validMarksCount = 0;
-                    double sum = 0;
-                    for (int i = 0; i < _marks.Length; i++)
-                    {
-                        if (_marks[i] > 0)
-                        {
-                            sum += _marks[i];
-                            validMarksCount++;
-                        }
-                    }
-
-                    if (validMarksCount == 0) return 0;
-                    return sum / validMarksCount;
-                }
-            }
-
-            public void Exam(int mark)
-            {
-                for (int i = 0; i < _marks.Length; i++)
-                {
-                    if (_marks[i] == 0)
-                    {
-                        if (mark > 2)
-                        {
-                            _marks[i] = mark;
-                        }
-                        else
-                        {
-                            _expelled = true;
-                            _marks[i] = mark;
-                        }
-                        return;
-                    }
-                }
-            }
-
-            public void Restore()
-            {
-                _expelled = false;
-            }
-
-            public static void SortByAverageMark(Student[] array)
-            {
-                if (array == null || array.Length == 0) return;
-
-                for (int i = 0; i < array.Length - 1; i++)
-                {
-                    for (int j = 0; j < array.Length - 1 - i; j++)
-                    {
-                        if (array[j].AverageMark < array[j + 1].AverageMark)
-                        {
-                            Student temp = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = temp;
-                        }
-                    }
-                }
-            }
-
-            public void Print()
-            {
-                Console.WriteLine($"Name: {_name}");
-                Console.WriteLine($"Surname: {_surname}");
-                Console.WriteLine($"AverageMark: {AverageMark:F2}");
-                Console.WriteLine($"Expelled: {_expelled}");
+                Assert.AreEqual(_input[i].Name, _students[i].Name);
+                Assert.AreEqual(_input[i].Surname, _students[i].Surname);
+                Assert.AreEqual(0, _students[i].AverageMark, 0.0001);
+                Assert.IsFalse(_students[i].IsExpelled);
+                Assert.AreEqual(i + 1, _students[i].ID);
             }
         }
 
-        public class Commission
+        [TestMethod]
+        public void Test_03_ExamStudents()
         {
-            public static void Sort(Student[] students)
-            {
-                if (students == null || students.Length == 0) return;
+            InitStudents();
+            ApplyExams();
 
-                for (int i = 0; i < students.Length - 1; i++)
+            for (int i = 0; i < _students.Length; i++)
+            {
+                var marks = _input[i].Marks.Where(m => m > 0).ToArray();
+                double avg = marks.Length == 0 ? 0 : marks.Average();
+                bool expelled = _input[i].Marks.Any(m => m == 2);
+
+                Assert.AreEqual(avg, _students[i].AverageMark, 0.0001);
+                Assert.AreEqual(expelled, _students[i].IsExpelled);
+            }
+        }
+
+        [TestMethod]
+        public void Test_04_SortByAverageMark()
+        {
+            InitStudents();
+            ApplyExams();
+
+            Lab8.Green.Task3.Student.SortByAverageMark(_students);
+
+            for (int i = 0; i < _students.Length; i++)
+            {
+                Assert.AreEqual(_outputSorted[i].Name, _students[i].Name);
+                Assert.AreEqual(_outputSorted[i].Surname, _students[i].Surname);
+                Assert.AreEqual(_outputSorted[i].AverageMark, _students[i].AverageMark, 0.0001);
+                Assert.AreEqual(_outputSorted[i].IsExpelled, _students[i].IsExpelled);
+            }
+        }
+
+        [TestMethod]
+        public void Test_05_CommissionSortByID()
+        {
+            InitStudents();
+            ApplyExams();
+            int startId = _students[0].ID;
+            var shuffled = _students.ToArray();
+            Array.Reverse(shuffled);
+            Lab8.Green.Task3.Commission.Sort(shuffled);
+
+            for (int i = 0; i < shuffled.Length; i++)
+            {
+                Assert.AreEqual(i + startId, shuffled[i].ID);
+            }
+        }
+
+        [TestMethod]
+        public void Test_06_CommissionExpel()
+        {
+            InitStudents();
+            ApplyExams();
+
+            var expelled = Lab8.Green.Task3.Commission.Expel(ref _students);
+
+            foreach (var s in expelled)
+            {
+                Assert.IsTrue(s.IsExpelled);
+            }
+            foreach (var s in _students)
+            {
+                Assert.IsFalse(s.IsExpelled);
+            }
+        }
+
+        [TestMethod]
+        public void Test_07_CommissionRestore()
+        {
+            InitStudents();
+            ApplyExams();
+
+            var expelled = Lab8.Green.Task3.Commission.Expel(ref _students);
+            if (expelled.Length > 0)
+            {
+                Lab8.Green.Task3.Commission.Restore(ref _students, expelled[0]);
+                Assert.IsTrue(_students.Any(s => s.ID == expelled[0].ID));
+            }
+        }
+
+        [TestMethod]
+        public void Test_08_RestoreMethod_Student()
+        {
+            InitStudents();
+            ApplyExams();
+
+            var s = _students.FirstOrDefault(st => st.IsExpelled);
+            if (s != null)
+            {
+                s.Restore();
+                Assert.IsFalse(s.IsExpelled);
+            }
+        }
+
+        private void ResetAllParticipantStatics()
+        {
+            var baseType = typeof(Lab8.Green.Task3.Student);
+
+            var allTypes = baseType.Assembly
+                .GetTypes()
+                .Where(t => baseType.IsAssignableFrom(t));
+
+            foreach (var type in allTypes)
+            {
+                var staticFields = type.GetFields(
+                    BindingFlags.Static |
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic);
+
+                foreach (var field in staticFields)
                 {
-                    for (int j = 0; j < students.Length - 1 - i; j++)
-                    {
-                        if (students[j] != null && students[j + 1] != null && students[j].ID > students[j + 1].ID)
-                        {
-                            Student temp = students[j];
-                            students[j] = students[j + 1];
-                            students[j + 1] = temp;
-                        }
-                    }
+                    if (field.FieldType == typeof(int))
+                        field.SetValue(null, 1);
+                    else if (field.FieldType == typeof(double))
+                        field.SetValue(null, 0.0);
+                    else if (field.FieldType == typeof(bool))
+                        field.SetValue(null, false);
+                    else
+                        field.SetValue(null, null);
                 }
             }
-
-            public static Student[] Expel(ref Student[] students)
+        }
+        private void InitStudents()
+        {
+            ResetAllParticipantStatics();
+            for (int i = 0; i < _input.Length; i++)
             {
-                if (students == null) return new Student[0];
-
-                int expelledCount = 0;
-                int activeCount = 0;
-
-                for (int i = 0; i < students.Length; i++)
-                {
-                    if (students[i] != null)
-                    {
-                        if (students[i].IsExpelled)
-                            expelledCount++;
-                        else
-                            activeCount++;
-                    }
-                }
-
-                Student[] expelledStudents = new Student[expelledCount];
-                Student[] activeStudents = new Student[activeCount];
-
-                int expelledIndex = 0;
-                int activeIndex = 0;
-
-                for (int i = 0; i < students.Length; i++)
-                {
-                    if (students[i] != null)
-                    {
-                        if (students[i].IsExpelled)
-                        {
-                            expelledStudents[expelledIndex++] = students[i];
-                        }
-                        else
-                        {
-                            activeStudents[activeIndex++] = students[i];
-                        }
-                    }
-                }
-
-                students = activeStudents;
-                return expelledStudents;
+                _students[i] = new Lab8.Green.Task3.Student(_input[i].Name, _input[i].Surname);
             }
+        }
 
-            public static void Restore(ref Student[] students, Student restored)
+        private void ApplyExams()
+        {
+            for (int i = 0; i < _input.Length; i++)
             {
-                if (students == null || restored == null) return;
-
-                if (!restored.IsExpelled) return;
-
-                for (int i = 0; i < students.Length; i++)
+                foreach (var mark in _input[i].Marks)
                 {
-                    if (students[i] != null && students[i].ID == restored.ID) return;
+                    _students[i].Exam(mark);
                 }
-
-                restored.Restore();
-
-                Student[] newArray = new Student[students.Length + 1];
-
-                for (int i = 0; i < students.Length; i++)
-                {
-                    newArray[i] = students[i];
-                }
-
-                newArray[students.Length] = restored;
-
-                students = newArray;
-
-                Sort(students);
             }
         }
     }

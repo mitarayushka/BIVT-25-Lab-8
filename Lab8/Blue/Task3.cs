@@ -4,77 +4,81 @@ namespace Lab8.Blue
     {
         public class Participant
         {
+
             private string _name;
+
             private string _surname;
-            protected int[] _penalty;
+
+            protected int[] _penaltyTimes;
             
             
             public string Name => _name;
             public string Surname => _surname;
-            
+
             public int[] Penalties
             {
                 get
                 {
-                    int[] copy = new int[_penalty.Length];
-                    Array.Copy(_penalty, 0, copy, 0, copy.Length);
+                    int[] copy = new int[_penaltyTimes.Length];
+                    Array.Copy(_penaltyTimes, copy, _penaltyTimes.Length);
+                    
                     return copy;
                 }
             }
-            
-            public int Total => _penalty.Sum();
+
+            public int Total
+            {
+                get
+                {
+                    int sum = 0;
+
+                    foreach (var time in _penaltyTimes)
+                        sum += time;
+
+                    return sum;
+                }
+            }
+
+            public virtual bool IsExpelled
+            {
+                get
+                {
+                    foreach (var t in _penaltyTimes)
+                        if (t == 10)
+                            return true;
+
+                    return false;
+                }
+            }
 
             public Participant(string name, string surname)
             {
                 _name = name;
                 _surname = surname;
-                _penalty = [];
-            }
-
-            public virtual bool IsExpelled
-            {
-                get {
-                    bool isExpelled = true;
-                    if (_penalty == null || _penalty.Length == 0)
-                        return !isExpelled;
-
-                    foreach (var time in _penalty)
-                    {
-                        if (time >= 10)
-                            return isExpelled;
-                    }
-
-                    return !isExpelled;
-                }
+                _penaltyTimes = new int[0];
             }
 
             public virtual void PlayMatch(int time)
             {
-                if (time < 0)
+                if (time == -1)
                     return;
                 
-                Array.Resize(ref _penalty, _penalty.Length + 1);
-                _penalty[^1] = time;
+                int[] newArray = new int[_penaltyTimes.Length + 1];
+
+                Array.Copy(_penaltyTimes, newArray, _penaltyTimes.Length);
+
+                newArray[^1] = time;
+                _penaltyTimes = newArray;
             }
 
             public static void Sort(Participant[] array)
             {
-                for (int i = 0; i < array.Length - 1; i++)
-                {
-                    for (int j = 0; j < array.Length - 1 - i; j++)
-                    {
-                        if (array[j].Total > array[j + 1].Total)
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
-                    }
-                }
+                Array.Sort(array, (a, b) => a.Total.CompareTo(b.Total));
             }
-
-            public void Print()
-            {
-                return;
-            }
-        }
-
+            
+            public void Print() { }
+            
+        } 
         public class BasketballPlayer : Participant
         {
             public BasketballPlayer(string name, string surname) : base(name, surname) { }
@@ -84,25 +88,25 @@ namespace Lab8.Blue
                 if (fouls <= 0 || fouls > 5)
                     return;
                 
-                Array.Resize(ref _penalty, _penalty.Length + 1);
-                _penalty[^1] = fouls;
+                Array.Resize(ref _penaltyTimes, _penaltyTimes.Length + 1);
+                _penaltyTimes[^1] = fouls;
             }
 
             public override bool IsExpelled
             {
                 get
                 {
-                    if (Total > _penalty.Length * 2)
+                    if (Total > _penaltyTimes.Length * 2)
                         return true;
 
                     int countFiveFouls = 0;
-                    for (int i = 0; i < _penalty.Length; i++)
+                    for (int i = 0; i < _penaltyTimes.Length; i++)
                     {
-                        if (_penalty[i] == 5)
+                        if (_penaltyTimes[i] == 5)
                             countFiveFouls++;
                     }
 
-                    if (countFiveFouls > 0.1 * _penalty.Length)
+                    if (countFiveFouls > 0.1 * _penaltyTimes.Length)
                         return true;
                     
                     return false;
@@ -126,8 +130,8 @@ namespace Lab8.Blue
                 if (time < 0)
                     return;
                 
-                Array.Resize(ref _penalty, _penalty.Length + 1);
-                _penalty[^1] = time;
+                Array.Resize(ref _penaltyTimes, _penaltyTimes.Length + 1);
+                _penaltyTimes[^1] = time;
                 
                 _totalTime += time;
             }
@@ -136,12 +140,12 @@ namespace Lab8.Blue
             {
                 get
                 {
-                    foreach (var time in _penalty)
+                    foreach (var time in _penaltyTimes)
                     {
                         if (time >= 10)
                             return true;
                     }
-                    if (Total > _totalTime * 0.1 / _penalty.Length)
+                    if (Total > _totalTime * 0.1 / _penaltyTimes.Length)
                         return true;
                     
                     return false;

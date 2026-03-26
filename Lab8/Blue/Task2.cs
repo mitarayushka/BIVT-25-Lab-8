@@ -4,35 +4,43 @@
     {
         public struct Participant
         {
+
             private string _name;
+
             private string _surname;
+
             private int[,] _marks;
             
-            private bool _FirstJump;
-            private bool _SecondJump;
-            
+            private int _jumpNumber;
+
             public string Name => _name;
             public string Surname => _surname;
-            
+
             public int[,] Marks
             {
                 get
                 {
-                    int[,] copy = new int[_marks.GetLength(0), _marks.GetLength(1)];
-                    Array.Copy(_marks, 0, copy, 0, _marks.Length);
+                    int[,] copy = new  int[_marks.GetLength(0), _marks.GetLength(1)];
+                    Array.Copy(_marks, copy, _marks.Length);
+                    
                     return copy;
                 }
             }
-            
+
             public int TotalScore
             {
                 get
                 {
-                    int total = 0;
-                    foreach (int value in _marks)
-                        total += value;
+                    int sum = 0;
+                    for (int i = 0; i < _marks.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < _marks.GetLength(1); j++)
+                        {
+                            sum += _marks[i, j];
+                        }
+                    }
 
-                    return total;
+                    return sum;
                 }
             }
 
@@ -41,45 +49,29 @@
                 _name = name;
                 _surname = surname;
                 _marks = new int[2, 5];
-                _FirstJump = false;
-                _SecondJump = false;
+                _jumpNumber = 0;
             }
-
+            
             public void Jump(int[] result)
             {
-                if (result.Length != 5 || result == null || (_FirstJump && _SecondJump))
+                if (_jumpNumber >= _marks.GetLength(0))
                     return;
-                if (!_FirstJump)
+                
+                for (int i = 0; i <result.Length; i++)
                 {
-                    for (int j = 0; j < _marks.GetLength(1); j++)
-                        _marks[0, j] = result[j];
-                    _FirstJump = true;
+                    _marks[_jumpNumber, i] = result[i];
                 }
-
-                else if (!_SecondJump)
-                {
-                    for (int j = 0; j < _marks.GetLength(1); j++)
-                        _marks[1, j] = result[j];
-                    _SecondJump = true;
-                }
+                
+                _jumpNumber++;
             }
 
             public static void Sort(Participant[] array)
             {
-                for (int i = 0; i < array.Length - 1; i++)
-                {
-                    for (int j = 0; j < array.Length - 1 - i; j++)
-                    {
-                        if (array[j].TotalScore < array[j + 1].TotalScore)
-                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
-                    }
-                }
+                Array.Sort(array, (a, b) => b.TotalScore.CompareTo(a.TotalScore));
             }
-
-            public void Print()
-            {
-                return;
-            }
+            
+            public void Print() {}
+            
         }
 
         public abstract class WaterJump
@@ -91,7 +83,6 @@
             private Participant[] _participants;
             
             
-            
             public string Name => _name;
             
             public int Bank => _bank;
@@ -99,7 +90,6 @@
             public Participant[] Participants => _participants.ToArray();
             
             public abstract double[] Prize { get; }
-            
             
 
             protected WaterJump(string name, int bank)

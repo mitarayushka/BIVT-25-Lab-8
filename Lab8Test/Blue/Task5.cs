@@ -1,4 +1,4 @@
-﻿//using System;
+//using System;
 //using System.IO;
 //using System.Linq;
 //using System.Reflection;
@@ -77,11 +77,11 @@
 //            Assert.AreEqual(0, type.GetFields(BindingFlags.Public | BindingFlags.Instance).Length);
 //            Assert.IsTrue(type.GetProperty("Name")?.CanRead ?? false, "Нет свойства Name");
 //            Assert.IsTrue(type.GetProperty("Sportsmen")?.CanRead ?? false, "Нет свойства Sportsmen");
-//            Assert.IsTrue(type.GetProperty("SummaryScore")?.CanRead ?? false, "Нет свойства SummaryScore");
+//            Assert.IsTrue(type.GetProperty("TotalScore")?.CanRead ?? false, "Нет свойства TotalScore");
 //            Assert.IsTrue(type.GetProperty("TopPlace")?.CanRead ?? false, "Нет свойства TopPlace");
 //            Assert.IsFalse(type.GetProperty("Name")?.CanWrite ?? false, "Свойство Name должно быть только для чтения");
 //            Assert.IsFalse(type.GetProperty("Sportsmen")?.CanWrite ?? false, "Свойство Sportsmen должно быть только для чтения");
-//            Assert.IsFalse(type.GetProperty("SummaryScore")?.CanWrite ?? false, "Свойство SummaryScore должно быть только для чтения");
+//            Assert.IsFalse(type.GetProperty("TotalScore")?.CanWrite ?? false, "Свойство TotalScore должно быть только для чтения");
 //            Assert.IsFalse(type.GetProperty("TopPlace")?.CanWrite ?? false, "Свойство TopPlace должно быть только для чтения");
 //            Assert.IsNotNull(type.GetMethod("Add", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(Lab8.Blue.Task5.Sportsman) }, null), "Нет публичного метода Add(Sportsman sportsman)");
 //            Assert.IsNotNull(type.GetMethod("Add", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(Lab8.Blue.Task5.Sportsman[]) }, null), "Нет публичного метода Add(Sportsman[] sportsmen)");
@@ -416,13 +416,13 @@
 //                        Assert.AreEqual(exp.Place, act.Place);
 //                    }
 //                    int expSum = team.Sportsmen.Sum(s => s.Place > 0 && s.Place <= 5 ? 6 - s.Place : 0);
-//                    Assert.AreEqual(expSum, team.SummaryScore);
+//                    Assert.AreEqual(expSum, team.TotalScore);
 //                    int expTop = team.Sportsmen.Where(s => s.Place > 0).Select(s => s.Place).DefaultIfEmpty(int.MaxValue).Min();
 //                    Assert.AreEqual(expTop == int.MaxValue ? 0 : expTop, team.TopPlace);
 //                }
 //                else
 //                {
-//                    Assert.AreEqual(0, team.SummaryScore);
+//                    Assert.AreEqual(0, team.TotalScore);
 //                    Assert.AreEqual(18, team.TopPlace);
 //                }
 //            }
@@ -447,13 +447,13 @@
 //                        Assert.AreEqual(exp.Place, act.Place);
 //                    }
 //                    int expSum = team.Sportsmen.Sum(s => s.Place > 0 && s.Place <= 5 ? 6 - s.Place : 0);
-//                    Assert.AreEqual(expSum, team.SummaryScore);
+//                    Assert.AreEqual(expSum, team.TotalScore);
 //                    int expTop = team.Sportsmen.Where(s => s.Place > 0).Select(s => s.Place).DefaultIfEmpty(int.MaxValue).Min();
 //                    Assert.AreEqual(expTop == int.MaxValue ? 0 : expTop, team.TopPlace);
 //                }
 //                else
 //                {
-//                    Assert.AreEqual(0, team.SummaryScore);
+//                    Assert.AreEqual(0, team.TotalScore);
 //                    Assert.AreEqual(18, team.TopPlace);
 //                }
 //            }
@@ -464,7 +464,7 @@
 //            for (int i = 0; i < _manTeams.Length; i++)
 //            {
 //                Assert.AreEqual(_outputManTeams[i].Name, _manTeams[i].Name);
-//                Assert.AreEqual(_outputManTeams[i].TotalScore, _manTeams[i].SummaryScore);
+//                Assert.AreEqual(_outputManTeams[i].TotalScore, _manTeams[i].TotalScore);
 //                Assert.AreEqual(_outputManTeams[i].TopPlace, _manTeams[i].TopPlace);
 //            }
 //        }
@@ -474,7 +474,7 @@
 //            for (int i = 0; i < _womanTeams.Length; i++)
 //            {
 //                Assert.AreEqual(_outputWomanTeams[i].Name, _womanTeams[i].Name);
-//                Assert.AreEqual(_outputWomanTeams[i].TotalScore, _womanTeams[i].SummaryScore);
+//                Assert.AreEqual(_outputWomanTeams[i].TotalScore, _womanTeams[i].TotalScore);
 //                Assert.AreEqual(_outputWomanTeams[i].TopPlace, _womanTeams[i].TopPlace);
 //            }
 //        }

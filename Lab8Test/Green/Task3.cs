@@ -139,7 +139,7 @@ namespace Lab8Test.Green
             InitStudents();
             ApplyExams();
             int startId = _students[0].ID;
-            var shuffled = _students.Reverse().ToArray();
+            var shuffled = ((IEnumerable)_students).Reverse().ToArray();
             Lab8.Green.Task3.Commission.Sort(shuffled);
 
             for (int i = 0; i < shuffled.Length; i++)

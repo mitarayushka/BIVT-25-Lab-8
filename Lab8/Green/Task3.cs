@@ -43,7 +43,6 @@ namespace Lab8.Green
 
                     int validMarksCount = 0;
                     double sum = 0;
-
                     for (int i = 0; i < _marks.Length; i++)
                     {
                         if (_marks[i] > 0)

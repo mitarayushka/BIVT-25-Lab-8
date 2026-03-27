@@ -190,7 +190,7 @@ namespace Lab8Test.Purple
             foreach (var p in _participants)
                 _competition.Add(p);
 
-            ещё 3 прыжка(1 уже сделан в Add)
+            //ещё 3 прыжка(1 уже сделан в Add)
             for (int r = 1; r < 4; r++)
             {
                 foreach (var p in _competition.Participants)

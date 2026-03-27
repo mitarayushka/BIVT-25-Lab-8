@@ -35,6 +35,7 @@ public class Task2
         public static void Sort(Participant[] array) =>
             Array.Sort(array, (a, b) => b.TotalScore.CompareTo(a.TotalScore));
 
+        public void Print() {}
     }
 
 

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Globalization;
 using static Lab8.Purple.Task4;
 
 namespace Lab8.Purple
@@ -148,7 +149,7 @@ namespace Lab8.Purple
             {
                 _researches = new Research[0];
             }
-            public void Add(Research research)
+            private void Add(Research research)
             {
                 Array.Resize(ref _researches, _researches.Length + 1);
                 _researches[_researches.Length - 1] = research;
@@ -159,6 +160,44 @@ namespace Lab8.Purple
                 Research research = new Research($"No_{_id}_{date.ToString("dd")}/YY{date.ToString("yy")}");
                 Add(research);
                 return research;
+            }
+            public (string, double)[] GetGeneralReport(int question)
+            {
+                Dictionary<string, int> counts = new Dictionary<string, int>();
+                int count = 0;
+                foreach (var research in _researches)
+                {
+                    foreach (var response in research.Responses)
+                    {
+                        string answer = "";
+                        switch (question)
+                        {
+                            case 1:
+                                answer = response.Animal;
+                                break;
+                            case 2:
+                                answer = response.CharacterTrait;
+                                break;
+                            case 3:
+                                answer = response.Concept;
+                                break;
+                            default:
+                                break;
+                        }
+                        if (string.IsNullOrWhiteSpace(answer))
+                            continue;
+
+                        count++;
+                        if (counts.ContainsKey(answer))
+                            counts[answer]++;
+                        else
+                            counts[answer] = 1;
+                            
+                    }
+                }
+
+                if(count == 0)
+                    return new (string, double)
             }
         }
     }

@@ -221,7 +221,7 @@
 //        {
 //            _juniorParticipants = new Lab8.Purple.Task2.Participant[5];
 //            for (int i = 0; i < 5; i++)
-//                _juniorParticipants[i] = new Lab8.Purple.Task2.Participant(_input[i+5].Name, _input[i+5].Surname);
+//                _juniorParticipants[i] = new Lab8.Purple.Task2.Participant(_input[i + 5].Name, _input[i + 5].Surname);
 //        }
 
 //        private void JumpPro()
@@ -237,7 +237,7 @@
 //            _juniorSkiJumping = new Lab8.Purple.Task2.JuniorSkiJumping();
 //            _juniorSkiJumping.Add(_juniorParticipants);
 //            for (int i = 0; i < 5; i++)
-//                _juniorSkiJumping.Jump(_input[i+5].Distance, _input[i+5].Marks);
+//                _juniorSkiJumping.Jump(_input[i + 5].Distance, _input[i + 5].Marks);
 //        }
 
 //        private void ArrayLinqPro()

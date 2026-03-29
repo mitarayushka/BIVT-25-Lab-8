@@ -1,0 +1,15 @@
+F:\UE_projects\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.exe
+F:\UE_projects\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.deps.json
+F:\UE_projects\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.runtimeconfig.json
+F:\UE_projects\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.dll
+F:\UE_projects\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.pdb
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.GeneratedMSBuildEditorConfig.editorconfig
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.AssemblyInfoInputs.cache
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.AssemblyInfo.cs
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.csproj.CoreCompileInputs.cache
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.sourcelink.json
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.dll
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\refint\Lab8.dll
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.pdb
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.genruntimeconfig.cache
+F:\UE_projects\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\ref\Lab8.dll

@@ -110,12 +110,7 @@ namespace Lab8.Green
             }
             public void Print()
             {
-                Console.WriteLine("Имя: " + _name);
-                Console.WriteLine("Фамилия: " + _surname);
-                Console.WriteLine("Отчислен: " + _isExpelled);
-                Console.WriteLine("Оценки: " + _marks[0] + " " + _marks[1] + " " + _marks[2]);
-                Console.WriteLine("Средний балл: " + AverageMark);
-                Console.WriteLine();
+                return;
             }
         }
 

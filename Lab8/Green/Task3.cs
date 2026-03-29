@@ -1,5 +1,3 @@
-using System;
-
 namespace Lab8.Green
 {
     public class Task3
@@ -204,5 +202,4 @@ namespace Lab8.Green
             }
         }
     }
-}
 }

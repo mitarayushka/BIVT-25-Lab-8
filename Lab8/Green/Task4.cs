@@ -1,210 +1,177 @@
 namespace Lab8.Green
 {
-    public class Task3
+    public class Task4
     {
-        public class Student
+        public struct Participant
         {
             private string _name;
             private string _surname;
-            private int[] _marks;
-            private bool _isExpelled;
-            private int _id;
-            
-            private static int _nextid;
-            
+            private double[] _jumps;
+
             public string Name => _name;
-            public string Surname => _surname; 
-            public int ID => _id;
-            
-            
-            public int[] Marks
+            public string Surname => _surname;
+
+            public double[] Jumps
             {
                 get
                 {
-                    int[] copy = new int[_marks.Length];
-                    for (int i = 0; i < _marks.Length; i++)
+                    double[] copy = new double[_jumps.Length];
+
+                    for (int i = 0; i < _jumps.Length; i++)
                     {
-                        copy[i] = _marks[i];
+                        copy[i] = _jumps[i];
                     }
+                        
                     return copy;
                 }
             }
-            public bool IsExpelled => _isExpelled;
-            public double AverageMark
+
+            public double BestJump
             {
                 get
                 {
-                    double sum = 0;
-                    int count = 0;
-
-                    for (int i = 0; i < _marks.Length; i++)
+                    double best = 0;
+                    for (int i = 0; i < _jumps.Length; i++)
                     {
-                        if (_marks[i] > 0)
+                        if (_jumps[i] > best)
                         {
-                            sum += _marks[i];
-                            count++;
+                            best = _jumps[i];
                         }
                     }
 
-                    if (count == 0)
-                        return 0;
-
-                    return sum / count;
+                    return best;
                 }
             }
 
-            static Student()
-            {
-                _nextid = 1;
-            }
-            
-            public Student(string name, string surname)
+            public Participant(string name, string surname)
             {
                 _name = name;
                 _surname = surname;
-                _marks = new int[3];
-                _isExpelled = false;
-                _id = _nextid;
-                _nextid ++;
+                _jumps = new double[3];
             }
 
-            public void Restore()
+            public void Jump(double result)
             {
-                _isExpelled = false;
-            }
-            
-            public void Exam(int mark)
-            {
-                if (_isExpelled)
+                for (int i = 0; i < _jumps.Length; i++)
                 {
-                    return;
-                }
-
-                for (int i = 0; i < _marks.Length; i++)
-                {
-                    if (_marks[i] == 0)
+                    if (_jumps[i] == 0)
                     {
-                        _marks[i] = mark;
-
-                        if (mark == 2)
-                            _isExpelled = true;
-
-                        break;
-                    }
-                }
-            }
-            public static void SortByAverageMark(Student[] array)
-            {
-                for (int i = 0; i < array.Length - 1; i++)
-                {
-                    for (int j = 0; j < array.Length - 1 - i; j++)
-                    {
-                        if (array[j].AverageMark < array[j + 1].AverageMark)
-                        {
-                            Student temp = array[j];
-                            array[j] = array[j + 1];
-                            array[j + 1] = temp;
-                        }
-                    }
-                }
-            }
-            public void Print()
-            {
-                Console.WriteLine("Имя: " + _name);
-                Console.WriteLine("Фамилия: " + _surname);
-                Console.WriteLine("Отчислен: " + _isExpelled);
-                Console.WriteLine("Оценки: " + _marks[0] + " " + _marks[1] + " " + _marks[2]);
-                Console.WriteLine("Средний балл: " + AverageMark);
-                Console.WriteLine();
-            }
-        }
-
-        public class Commission
-        {
-            public static void Sort(Student[] students)
-            {
-                for (int i = 0; i < students.Length - 1; i++)
-                {
-                    for (int j = 0; j < students.Length - 1 - i; j++)
-                    {
-                        if (students[j].ID > students[j + 1].ID)
-                        {
-                            Student temp = students[j];
-                            students[j] = students[j + 1];
-                            students[j + 1] = temp;
-                        }
-                    }
-                }
-            }
-
-            public static Student[] Expel(ref Student[] students)
-            {
-                Student[] isExcpelleledStudents;
-                Student[] isNotExpelledStudents;
-                int countIsExpelled = 0;
-                for (int i = 0; i < students.Length; i++)
-                {
-                    if (students[i].IsExpelled)
-                    {
-                        countIsExpelled++;
-                    }
-                }
-                isExcpelleledStudents = new Student[countIsExpelled];
-                isNotExpelledStudents = new Student[students.Length - countIsExpelled];
-                int j = 0;
-                int k = 0;
-                for (int i = 0; i < students.Length; i++)
-                {
-                    if (students[i].IsExpelled)
-                    {
-                        isExcpelleledStudents[j] = students[i];
-                        j++;
-                    }
-                    else
-                    {
-                        isNotExpelledStudents[k] = students[i];
-                        k++;
-                    }
-                }
-                students = isNotExpelledStudents;
-                return isExcpelleledStudents;
-            }
-
-            public static void Restore(ref Student[] students, Student restored)
-            {
-                if (!restored.IsExpelled)
-                {
-                    return;
-                }
-                
-                for (int i = 0; i < students.Length; i++)
-                {
-                    if (students[i].ID == restored.ID)
-                    {
+                        _jumps[i] = result;
                         return;
                     }
                 }
-                
-                restored.Restore();
-                
-                Student[] newArray = new Student[students.Length + 1];
-                
-                int insertIndex = 0;
-                
-                while (insertIndex < students.Length && students[insertIndex].ID < restored.ID)
+            }
+
+            public static void Sort(Participant[] array)
+            {
+                for (int i = 0; i < array.Length - 1; i++)
                 {
-                    newArray[insertIndex] = students[insertIndex];
-                    insertIndex++;
+                    for (int j = i + 1; j < array.Length; j++)
+                    {
+                        if (array[i].BestJump < array[j].BestJump)
+                        {
+                            (array[i], array[j]) = (array[j], array[i]);
+                        }
+                    }
                 }
-                
-                newArray[insertIndex] = restored;
-                
-                for (int i = insertIndex; i < students.Length; i++)
+            }
+
+            public void Print()
+            {
+                return;
+            }
+        }
+        public abstract class Discipline
+        {
+            private string _name;
+            
+            protected Participant[] _participants;
+
+            public string Name => _name;
+
+            public Participant[] Participants
+            {
+                get
                 {
-                    newArray[i + 1] = students[i];
+                    Participant[] copy = new Participant[_participants.Length];
+                    Array.Copy(_participants, copy, _participants.Length);
+                    return copy;
                 }
-                
-                students = newArray;
+            }
+
+            protected Discipline(string name)
+            {
+                _name = name;
+                _participants = new Participant[0];
+            }
+            public void Add(Participant participant)
+            {
+                Participant[] newArray = new Participant[_participants.Length + 1];
+                Array.Copy(_participants, newArray, _participants.Length);
+                newArray[_participants.Length] = participant;
+                _participants = newArray;
+            }
+
+            public void Add(Participant[] participants)
+            {
+                Participant[] newArray = new Participant[_participants.Length + participants.Length];
+                Array.Copy(_participants, newArray, _participants.Length);
+                Array.Copy(participants, 0, newArray, _participants.Length, participants.Length);
+                _participants = newArray;
+            }
+
+            public void Sort()
+            {
+                Participant.Sort(_participants);
+            }
+
+            public abstract void Retry(int index);
+
+            public void Print()
+            {
+                return;
+            }
+        }
+
+        public class LongJump : Discipline
+        {
+            public LongJump() : base("Long jump")
+            {
+            }
+
+            public override void Retry(int index)
+            {
+                Participant p = _participants[index];
+                double best = p.BestJump;
+
+                Participant newParticipant = new Participant(p.Name, p.Surname);
+
+                newParticipant.Jump(best);
+
+                _participants[index] = newParticipant;
+            }
+        }
+
+        public class HighJump : Discipline
+        {
+            public HighJump() : base("High jump")
+            {
+            }
+
+            public override void Retry(int index)
+            {
+                Participant p = _participants[index];
+
+                double[] jumps = p.Jumps;
+
+                Participant newParticipant = new Participant(p.Name, p.Surname);
+
+                for (int i = 0; i < 2 && i < jumps.Length && jumps[i] != 0; i++)
+                {
+                    newParticipant.Jump(jumps[i]);
+                }
+
+                _participants[index] = newParticipant;
             }
         }
     }

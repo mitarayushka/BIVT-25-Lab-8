@@ -119,9 +119,31 @@ namespace Lab8.Purple
             }
             public void Shuffle()
             {
-                Sportsman[] sorted = new Sportsman[_sportsmen.Length];
-                _sportsmen.OrderBy(x => x.Time).ToArray();
-                Array.Copy(sorted, _sportsmen, _sportsmen.Length);
+                Sportsman[] men, women;
+                Sort();
+                Split(out men, out women);
+
+                Sportsman[] result = new Sportsman[_sportsmen.Length];
+
+                bool isA = true;
+
+                if (men.Length > 0 && women.Length > 0)
+                    isA = men[0].Time <= women[0].Time;
+
+                int i = 0, m = 0, w = 0;
+
+                while (m < men.Length || w < women.Length)
+                {
+                    if (isA && m < men.Length)
+                        result[i++] = men[m++];
+
+                    if (w < women.Length)
+                        result[i++] = women[w++];
+
+                    if (!isA && m < men.Length)
+                        result[i++] = men[m++];
+                }
+                _sportsmen = result;
             }
             public void Sort()
             {

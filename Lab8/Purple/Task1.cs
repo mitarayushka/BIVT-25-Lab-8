@@ -143,8 +143,8 @@ namespace Lab8.Purple
             private Judge[] _judges;
             private Participant[] _participants;
 
-            public Judge[] Judges => (Judge[])_judges.Clone();
-            public Participant[] Participants => (Participant[])_participants.Clone();
+            public Judge[] Judges => _judges;
+            public Participant[] Participants => _participants;
             public Competition(Judge[] Judges, Participant[] Participants)
             {
                 if (Judges.Length == 7)
@@ -152,18 +152,32 @@ namespace Lab8.Purple
                 _participants = Participants;
             }
 
-            public void Evaluate(Participant jumper)
+            public void Evaluate(Participant participant)
             {
-                int[] temp = new int[7];
-                int z = 0;
-                for (int i = 0; i < 4; i++)
+                int[] marks = new int[_judges.Length];
+                for (int x = 0; x < _judges.Length; x++)
                 {
-
+                    marks[x] = _judges[x].CreateMark();
                 }
+                participant.Jump(marks);
             }
             public void Sort()
             {
                 Participant.Sort(_participants);
+            }
+            public void Add(Participant participant)
+            {
+                Array.Resize(ref _participants, _participants.Length + 1);
+                _participants[_participants.Length - 1] = participant;
+                Evaluate(participant);
+            }
+
+            public void Add(Participant[] jumpers)
+            {
+                foreach (Participant jumper in jumpers)
+                {
+                    Add(jumper);
+                }
             }
         }
 

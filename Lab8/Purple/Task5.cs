@@ -137,13 +137,13 @@ namespace Lab8.Purple
         public class Report
         {
             private Research[] _researches;
-            
-            public Research[] Researches => (Research[])_researches.Clone();
+            public Research[] Researches => _researches;
 
-            private static int _id = 0;
+            private static int _id;
+
             static Report()
             {
-                _id++;
+                _id = 1;
             }
             public Report()
             {
@@ -157,14 +157,14 @@ namespace Lab8.Purple
             public Research MakeResearch()
             {
                 DateTime date = DateTime.Now;
-                Research research = new Research($"No_{_id}_{date.ToString("dd")}/YY{date.ToString("yy")}");
+                Research research = new Research($"No_{_id++}_{date.ToString("MM")}/{date.ToString("YY")}");
                 Add(research);
                 return research;
             }
             public (string, double)[] GetGeneralReport(int question)
             {
                 Dictionary<string, int> counts = new Dictionary<string, int>();
-                int count = 0;
+                int count = 0, countAnswers = 0;
                 foreach (var research in _researches)
                 {
                     foreach (var response in research.Responses)
@@ -191,13 +191,23 @@ namespace Lab8.Purple
                         if (counts.ContainsKey(answer))
                             counts[answer]++;
                         else
+                        {
                             counts[answer] = 1;
-                            
+                            countAnswers++;
+                        }
                     }
                 }
 
-                if(count == 0)
-                    return new (string, double)
+                if (count == 0)
+                    return new (string, double)[0];
+
+                (string, double)[] output = new (string, double)[countAnswers];
+                countAnswers = 0;
+                foreach (var el in counts)
+                {
+                    output[countAnswers++] = (el.Key, ((double)el.Value / count) * 100);
+                }
+                return output;
             }
         }
     }

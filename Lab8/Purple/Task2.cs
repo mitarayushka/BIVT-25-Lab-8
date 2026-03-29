@@ -29,15 +29,12 @@ namespace Lab8.Purple
                     Array.Copy(_marks, sortedMarks, 5);
                     Array.Sort(sortedMarks);
 
-                    // Суммируем средние три оценки (отбрасываем минимальную и максимальную)
                     int sumMarks = sortedMarks[1] + sortedMarks[2] + sortedMarks[3];
 
-                    // Рассчитываем очки за дальность
                     int distancePoints = 60 + (_distance - _target) * 2;
                     _result = sumMarks + distancePoints;
                     if (_result < 0) _result = 0;
-
-                    // Итоговый результат: сумма оценок + очки за дальность + бонус за превышение норматива
+  
                     return _result;
                 }
             }
@@ -98,7 +95,6 @@ namespace Lab8.Purple
             }
             public void Add(Participant participants)
             {
-                //if (participants == null) return;
 
                 Participant[] newArray = new Participant[_participants.Length + 1];
                 Array.Copy(_participants, newArray, _participants.Length);
@@ -118,11 +114,8 @@ namespace Lab8.Purple
             {
                 if (marks == null || marks.Length == 0 || _count >= _participants.Length) return;
 
-                //_participants[_count].Jump(distance, marks, _standard);
-                //_count += 1;
-                var participant = _participants[_count];
-                participant.Jump(distance, marks, _standard);
-                _participants[_count++] = participant;
+                _participants[_count].Jump(distance, marks, _standard);
+                _count += 1;
             }
             public void Print()
             {

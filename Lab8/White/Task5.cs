@@ -1,162 +1,115 @@
-namespace Lab8.White
+using System;
+
+namespace Lab7.White
 {
     public class Task5
     {
         public struct Match
         {
-            //поля
             private int _goals;
             private int _misses;
 
+            public int Goals { get { return _goals; } }
+            public int Misses { get { return _misses; } }
 
-            //свойства
-            public int Goals => _goals;
-            public int Misses => _misses;
-            //возвращают разность забитых и пропущенных голов
             public int Difference => _goals - _misses;
-            //{
-            //    get
-            //    {
-            //        return _goals-_misses;
-
-            //    }
-            //}
-            //количество очков за матч (выигрыш – 3, ничья – 1, проигрыш – 0)
             public int Score
             {
                 get
                 {
                     if (_goals > _misses)
-                    {
                         return 3;
-                    }
                     else if (_goals == _misses)
-                    {
                         return 1;
-                    }
                     else
-                    {
                         return 0;
-                    }
                 }
-
-
-
             }
-            //конструктор
             public Match(int goals, int misses)
             {
                 _goals = goals;
                 _misses = misses;
             }
-
-            //метод
             public void Print()
             {
-                Console.WriteLine(_goals);
-                Console.WriteLine(_misses);
-                Console.WriteLine(Difference);
-                Console.WriteLine(Score);
+                Console.WriteLine($"Забито: {_goals}, Пропущено: {_misses}");
+                Console.WriteLine($"Разница: {Difference}, Очки: {Score}");
             }
         }
+
         public abstract class Team
         {
-            //поля
-            private string _name;
-            private Match[] _matches;
+            protected string _name;
+            protected Match[] _matches;
 
-            //свойство
             public string Name => _name;
-            public Match[] Matches // берем массив первой структуры
-            {
-                get
-                {
+            public Match[] Matches => _matches;
 
-                    return _matches;
-                }
-            }
-            // Суммарная разность забитых и пропущенных голов во всех матчах
             public int TotalDifference
             {
                 get
                 {
-                    if (_matches == null || _matches.Length == 0)
-                        return 0;
-
-                    int count = 0;
+                    int sum = 0;
                     for (int i = 0; i < _matches.Length; i++)
-                    {
-                        int matchDifference = _matches[i].Difference;
-                        count = count + matchDifference;
-
-                    }
-                    return count;
-
+                        sum += _matches[i].Difference;
+                    return sum;
                 }
             }
-            //суммарное количество баллов, набранных командой
+
             public int TotalScore
             {
                 get
                 {
-                    if (_matches == null || _matches.Length == 0)
-                        return 0;
-                    int count1 = 0;
+                    int sum = 0;
                     for (int i = 0; i < _matches.Length; i++)
-                    {
-                        int matchScore = _matches[i].Score;
-                        count1 = count1 + matchScore;
-                    }
-                    return count1;
+                        sum += _matches[i].Score;
+                    return sum;
                 }
             }
-            //конструктор
+
             public Team(string name)
             {
                 _name = name;
                 _matches = new Match[0];
             }
-            //метод
+
             public virtual void PlayMatch(int goals, int misses)
             {
-                if (_matches == null)
-                    _matches = new Match[0];
-
-                Array.Resize(ref _matches, _matches.Length + 1);
-                _matches[_matches.Length - 1] = new Match(goals, misses);//добавляем новый матч в новый созданный массив
-
+                int currentLength = _matches.Length;
+                Array.Resize(ref _matches, currentLength + 1);
+                _matches[currentLength] = new Match(goals, misses);
             }
+
             public static void SortTeams(Team[] teams)
             {
-                if (teams == null || teams.Length <= 1)
-                    return;
-
-                for (int i = 0; i < teams.Length; i++)
+                for (int i = 0; i < teams.Length - 1; i++)
                 {
-                    for (int j = 1; j < teams.Length; j++)
+                    for (int j = 0; j < teams.Length - 1 - i; j++)
                     {
-                        // Сначала сравниваем по очкам
-                        if (teams[j - 1].TotalScore < teams[j].TotalScore)
+                        if (teams[j].TotalScore < teams[j + 1].TotalScore)
                         {
-                            (teams[j - 1], teams[j]) = (teams[j], teams[j - 1]);
+                            Team temp = teams[j];
+                            teams[j] = teams[j + 1];
+                            teams[j + 1] = temp;
                         }
-                        // сравниваем по разности голов(усли количество очков равно)
-                        else if (teams[j - 1].TotalScore == teams[j].TotalScore)
+                        else if (teams[j].TotalScore == teams[j + 1].TotalScore)
                         {
-                            if (teams[j - 1].TotalDifference < teams[j].TotalDifference)
+                            if (teams[j].TotalDifference < teams[j + 1].TotalDifference)
                             {
-                                (teams[j - 1], teams[j]) = (teams[j], teams[j - 1]);
+                                Team temp = teams[j];
+                                teams[j] = teams[j + 1];
+                                teams[j + 1] = temp;
                             }
                         }
                     }
                 }
             }
-            public void Print()
+
+            public virtual void Print()
             {
-                Console.WriteLine(_name);
-                Console.WriteLine(_matches.Length);
-                Console.WriteLine(TotalScore);
-                Console.WriteLine(TotalDifference);
+                Console.WriteLine($"Название: {_name}");
+                Console.WriteLine($"Total Score: {TotalScore}");
+                Console.WriteLine($"Total Difference: {TotalDifference}");
             }
         }
 
@@ -169,28 +122,27 @@ namespace Lab8.White
             public ManTeam(string name, ManTeam derby = null) : base(name)
             {
                 _derby = derby;
-
             }
 
             public void PlayMatch(int goals, int misses, ManTeam team = null)
             {
-                if (team == _derby && team != null)
+                if (team != null && team == _derby)
                 {
                     goals++;
-
                 }
                 base.PlayMatch(goals, misses);
-
-
             }
 
-
-
-
-
-
-
+            public override void Print()
+            {
+                base.Print();
+                if (_derby != null)
+                {
+                    Console.WriteLine($"Команда-дерби: {_derby.Name}");
+                }
+            }
         }
+
         public class WomanTeam : Team
         {
             private int[] _penalties;
@@ -201,47 +153,44 @@ namespace Lab8.White
             {
                 get
                 {
-                    if (_penalties == null || _penalties.Length == 0)
-                        return 0;
-
-
-
-
-                    int count = 0;
+                    int sum = 0;
                     for (int i = 0; i < _penalties.Length; i++)
                     {
-                        count += _penalties[i];
-
+                        sum += _penalties[i];
                     }
-                    return count;
-
+                    return sum;
                 }
-
             }
+
             public WomanTeam(string name) : base(name)
             {
                 _penalties = new int[0];
-
-
             }
+
             public override void PlayMatch(int goals, int misses)
             {
-                if (misses > goals)
-                {
-                    int penalti = misses - goals;
-                    Array.Resize(ref _penalties, _penalties.Length + 1);
-                    _penalties[_penalties.Length - 1] = penalti;
-
-
-                }
                 base.PlayMatch(goals, misses);
 
-
-
+                if (misses > goals)
+                {
+                    int penalty = misses - goals;
+                    int currentLength = _penalties.Length;
+                    Array.Resize(ref _penalties, currentLength + 1);
+                    _penalties[currentLength] = penalty;
+                }
             }
 
-
+            public override void Print()
+            {
+                base.Print();
+                Console.WriteLine($"Total Penalties: {TotalPenalties}");
+                Console.Write("Штрафы: ");
+                for (int i = 0; i < _penalties.Length; i++)
+                {
+                    Console.Write(_penalties[i] + " ");
+                }
+                Console.WriteLine();
+            }
         }
-
     }
 }

@@ -4,69 +4,81 @@ namespace Lab8.White
     {
         public class Participant
         {
-            //создаем поля
             private string _surname;
             private string _club;
-            private double _firstjump;
-            private double _secondjump;
+            private double _firstJump;
+            private double _secondJump;
 
             private static double _standard;
             private static int _jumpers;
             private static int _disqualified;
 
-
-
-            //свойства только для чтения 
-            public string Surname => _surname;
-            public string Club => _club;
-            public double FirstJump => _firstjump;
-            public double SecondJump => _secondjump;
-
-            public double JumpSum => _firstjump + _secondjump;
-
-
+            
+            public static double Standard => _standard;
             public static int Jumpers => _jumpers;
             public static int Disqualified => _disqualified;
-            //создаем конструктор 
+
+            
+            public string Surname => _surname;
+            public string Club => _club;
+            public double FirstJump => _firstJump;
+            public double SecondJump => _secondJump;
+            public double JumpSum => _firstJump + _secondJump;
+
+           
             public Participant(string surname, string club)
             {
-                //проинициализируем 2 строки поля
                 _surname = surname;
                 _club = club;
-                _firstjump = 0;
-                _secondjump = 0;
-                _jumpers++;
-
-
+                _firstJump = 0;
+                _secondJump = 0;
+                _jumpers++; // Увеличиваем счетчик активных участников
             }
+
+            
             static Participant()
             {
-                _disqualified = 0;
-                _jumpers = 0;
                 _standard = 5;
-
+                _jumpers = 0;
+                _disqualified = 0;
             }
 
-
-
-            //создаем метод
+            
             public void Jump(double result)
             {
-                if (_firstjump == 0)
+                if (_firstJump == 0)
                 {
-                    _firstjump = result;
+                    _firstJump = result;
                 }
-                else if (_secondjump == 0)
+                else if (_secondJump == 0)
                 {
-                    _secondjump = result;
+                    _secondJump = result;
                 }
-
             }
+
+            
+            public static void Sort(Participant[] array)
+            {
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    for (int j = 0; j < array.Length - 1 - i; j++)
+                    {
+                        if (array[j].JumpSum < array[j + 1].JumpSum)
+                        {
+                            Participant temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+
+            
             public static void Disqualify(ref Participant[] participants)
             {
-                // найдем тех кто не прошел норму
                 if (participants == null || participants.Length == 0)
                     return;
+
                 int count = 0;
                 for (int i = 0; i < participants.Length; i++)
                 {
@@ -74,14 +86,14 @@ namespace Lab8.White
                     {
                         count++;
                     }
-                    else//если норма не пройдена участник = дисквалифиц
+                    else
                     {
                         _disqualified++;
                         _jumpers--;
                     }
                 }
-                //найдем и создадим массив для участников кто прошел норму
-                Participant[] participants1 = new Participant[count];// создалт и заполнили длинной тех участников которые прошли через норму 
+
+                Participant[] participants1 = new Participant[count];
                 int k = 0;
 
                 for (int i = 0; i < participants.Length; i++)
@@ -93,36 +105,17 @@ namespace Lab8.White
                     }
                 }
                 participants = participants1;
-
             }
 
-            public static void Sort(Participant[] array)
-            {
-                if (array == null || array.Length == 0)
-                    return;
-                // сорт по убыванию
-                for (int i = 0; i < array.Length; i++)
-                {
-                    for (int j = 1; j < array.Length; j++)
-                    {
-                        if (array[j - 1].JumpSum < array[j].JumpSum)
-                        {
-                            (array[j - 1], array[j]) = (array[j], array[j - 1]);
-                        }
-                    }
-
-                }
-            }
+            
             public void Print()
             {
-                Console.WriteLine(_surname);
-                Console.WriteLine(_club);
-                Console.WriteLine(_firstjump);
-                Console.WriteLine(_secondjump);
-                Console.WriteLine(JumpSum);
+                Console.WriteLine($"Фамилия: {_surname}");
+                Console.WriteLine($"Клуб: {_club}");
+                Console.WriteLine($"Первый прыжок: {_firstJump}");
+                Console.WriteLine($"Второй прыжок: {_secondJump}");
+                Console.WriteLine($"Сумма: {JumpSum}");
             }
         }
-
-
     }
 }

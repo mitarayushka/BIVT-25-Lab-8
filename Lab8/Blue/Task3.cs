@@ -59,10 +59,25 @@ namespace Lab8.Blue
                 if (value == 0 || value == 2 || value == 5 || value == 10)
                 {
                     if (_penalties == null) return;
-
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = value;
                     _matchCount++;
+                }
+            }
+            public static void Sort(Participant[] array)
+            {
+                if (array == null || array.Length <= 1) return;
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    for (int j = i + 1; j < array.Length; j++)
+                    {
+                        if (array[i].Total > array[j].Total)
+                        {
+                            Participant temp = array[i];
+                            array[i] = array[j];
+                            array[j] = temp;
+                        }
+                    }
                 }
             }
             public void Print()
@@ -70,7 +85,6 @@ namespace Lab8.Blue
                 Console.WriteLine($"{_name} {_surname}: {Total} мин штрафа, исключен: {IsExpelled}");
             }
         }
-        
         public class BasketballPlayer : Participant
         {
             public BasketballPlayer(string name, string surname) : base(name, surname) { }
@@ -79,28 +93,26 @@ namespace Lab8.Blue
                 get
                 {
                     if (_penalties == null || _penalties.Length == 0) return false;
-
                     int foulsMoreThan10Percent = 0;
                     int totalFouls = 0;
                     int matchesPlayed = _penalties.Length;
-
                     foreach (int fouls in _penalties)
                     {
                         totalFouls += fouls;
                         if (fouls == 5)
                             foulsMoreThan10Percent++;
                     }
-
                     bool condition1 = foulsMoreThan10Percent > matchesPlayed * 0.1;
                     bool condition2 = totalFouls > matchesPlayed * 2;
-
                     return condition1 || condition2;
                 }
             }
             public override void PlayMatch(int fouls)
             {
                 if (fouls < 0 || fouls > 5) return;
+
                 if (_penalties == null) return;
+
                 Array.Resize(ref _penalties, _penalties.Length + 1);
                 _penalties[_penalties.Length - 1] = fouls;
             }
@@ -123,10 +135,8 @@ namespace Lab8.Blue
                     {
                         if (time == 10) return true;
                     }
-
                     double averageTime = _totalTime / (double)_players;
                     double threshold = averageTime * 0.1;
-
                     return this.Total > threshold;
                 }
             }

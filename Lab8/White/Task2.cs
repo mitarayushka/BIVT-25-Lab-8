@@ -2,7 +2,7 @@ using System;
 
 namespace Lab8.White
 {
-    public class Participant
+    public class Task2
     {
         private string _name;
         private string _surname;

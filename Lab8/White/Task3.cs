@@ -2,7 +2,7 @@ using System;
 
 namespace Lab8.White
 {
-    public class Student
+    public class Task3
     {
         // Поля с измененным уровнем доступа (protected)
         protected string _name;

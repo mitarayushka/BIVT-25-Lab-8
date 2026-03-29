@@ -1,7 +1,6 @@
 using System;
 
-namespace Lab7.White
-{
+
     public class Task3
     {
         
@@ -154,4 +153,4 @@ namespace Lab7.White
             }
         }
     }
-}
+

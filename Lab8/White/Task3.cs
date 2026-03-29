@@ -1,127 +1,100 @@
 using System;
+using System.Linq;
 
 namespace Lab8.White
 {
     public class Task3
     {
-        // Поля с измененным уровнем доступа (protected)
-        protected string _name;
-        protected string _surname;
-        protected int[] _marks;
-        protected int _skips;
-
-        // Конструктор
-        public Student(string name, string surname, int[] marks, int skips)
+        public class Student
         {
-            _name = name;
-            _surname = surname;
-            _marks = marks;
-            _skips = skips;
-        }
+            private string _name;
+            private string _surname;
+            protected int[] _marks;
+            protected int _missedLessons;
 
-        // Защищенный конструктор для копирования
-        protected Student(Student other)
-        {
-            _name = other._name;
-            _surname = other._surname;
-            _marks = (int[])other._marks.Clone();
-            _skips = other._skips;
-        }
-
-        // Метод для добавления оценки (используется в WorkOff)
-        public void AddMark(int mark)
-        {
-            int[] newMarks = new int[_marks.Length + 1];
-            _marks.CopyTo(newMarks, 0);
-            newMarks[_marks.Length] = mark;
-            _marks = newMarks;
-        }
-
-        // Метод для замены оценки (используется в WorkOff)
-        public void ReplaceMark(int oldMark, int newMark)
-        {
-            for (int i = 0; i < _marks.Length; i++)
+            public Student(string name, string surname)
             {
-                if (_marks[i] == oldMark)
+                _name = name;
+                _surname = surname;
+                _marks = new int[5];
+                _missedLessons = 0;
+            }
+
+            protected Student(Student other)
+            {
+                _name = other._name;
+                _surname = other._surname;
+                _marks = (int[])other._marks.Clone();
+                _missedLessons = other._missedLessons;
+            }
+
+            public void Lesson(int mark)
+            {
+                if (mark == 2)
                 {
-                    _marks[i] = newMark;
-                    return;
+                    _missedLessons++;
                 }
             }
+
+            public string Name => _name;
+            public string Surname => _surname;
+            public int[] Marks => _marks;
+            public int MissedLessons => _missedLessons;
         }
 
-        public virtual void Print()
+        public class Undergraduate : Student
         {
-            Console.WriteLine($"Студент: {_name} {_surname}, Пропуски: {_skips}");
-            Console.Write("Оценки: ");
-            foreach (var m in _marks) Console.Write($"{m} ");
-            Console.WriteLine();
-        }
-    }
-
-    public class Undergraduate : Student
-    {
-        // Конструктор 1: принимает имя и фамилию
-        public Undergraduate(string name, string surname) : base(name, surname, new int[0], 0)
-        {
-        }
-
-        // Конструктор 2: принимает объект студента
-        public Undergraduate(Student student) : base(student)
-        {
-        }
-
-        // Метод отработки пропусков
-        public void WorkOff(int mark)
-        {
-            if (_skips > 0)
+            public Undergraduate(string name, string surname) : base(name, surname)
             {
-                _skips--;
-                AddMark(mark);
             }
-            else
+
+            public Undergraduate(Student other) : base(other)
             {
-                ReplaceMark(2, mark);
+            }
+
+            public void WorkOff(int mark)
+            {
+                if (_missedLessons > 0)
+                {
+                    _missedLessons--;
+                }
+                else
+                {
+                    for (int i = 0; i < _marks.Length; i++)
+                    {
+                        if (_marks[i] == 2)
+                        {
+                            _marks[i] = mark;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            public void Print()
+            {
+                Console.WriteLine($"Студент: {_name} {_surname}, Пропуски: {_missedLessons}");
+                Console.WriteLine("Оценки: " + string.Join(", ", _marks));
             }
         }
 
-        // Переопределение метода Print
-        public override void Print()
-        {
-            Console.WriteLine($"Бакалавр: {_name} {_surname}, Пропуски: {_skips}");
-            Console.Write("Оценки: ");
-            foreach (var m in _marks) Console.Write($"{m} ");
-            Console.WriteLine();
-        }
-    }
-
-    public class Task3
-    {
         public static void Main(string[] args)
         {
-            // Создание студента
-            Student s = new Student("Иван", "Иванов", new int[] { 4, 3, 2 }, 2);
+            Undergraduate ug = new Undergraduate("Иван", "Иванов");
+            ug.Lesson(2);
+            ug.Lesson(2);
             
-            // Создание бакалавра через конструктор с именем
-            Undergraduate u1 = new Undergraduate("Петр", "Петров");
+            ug.Print();
+
+            ug.WorkOff(4);
+            ug.WorkOff(3);
             
-            // Создание бакалавра через конструктор с объектом студента
-            Undergraduate u2 = new Undergraduate(s);
+            ug.Print();
 
-            u1.Print();
-            u2.Print();
-
-            // Отработка пропуска у u2 (было 2 пропуска, стало 1, добавлена оценка 4)
-            u2.WorkOff(4);
-            Console.WriteLine("После WorkOff(4) у u2:");
-            u2.Print();
-
-            // Отработка пропуска у u1 (пропусков 0, заменяем 2 на 5)
-            u1.AddMark(2); // Добавим двойку для теста замены
-            u1.Print();
-            u1.WorkOff(5); 
-            Console.WriteLine("После WorkOff(5) у u1:");
-            u1.Print();
+            ug.Lesson(2);
+            ug.WorkOff(5);
+            
+            ug.Print();
         }
     }
 }

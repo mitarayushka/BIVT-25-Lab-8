@@ -1,6 +1,3 @@
-﻿namespace Lab8.Green
-{
-    public class Task1
 namespace Lab8.Green
 {
     public class Task1
@@ -12,7 +9,7 @@ namespace Lab8.Green
             private string _trainer;
             private double _result;
             
-            protected double _standart;
+            protected double _standard;
             
             private static int _passed;
             
@@ -32,7 +29,7 @@ namespace Lab8.Green
                     }
                     else
                     {
-                        if (_result <= _standart)
+                        if (_result <= _standard)
                         {
                             return true;
                         }
@@ -63,7 +60,7 @@ namespace Lab8.Green
                 {
                     _result = result;
                     
-                    if (result <= _standart)
+                    if (result <= _standard)
                     {
                         _passed++;
                     }
@@ -109,7 +106,7 @@ namespace Lab8.Green
         {
             public Participant100M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
-                _standart = 12;
+                _standard = 12;
             }
         }
         
@@ -117,9 +114,8 @@ namespace Lab8.Green
         {
             public Participant500M(string surname, string group, string trainer) : base(surname, group, trainer)
             {
-                _standart = 90;
+                _standard = 90;
             }
         }
     }
-}
 }

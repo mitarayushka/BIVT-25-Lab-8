@@ -178,7 +178,7 @@ namespace Lab8.Purple
                 {
                     jumpMarks[i] = _judges[i].CreateMark();
                 }
-а
+
                 jumper.Jump(jumpMarks);
             }
             public void Add(Participant participants)

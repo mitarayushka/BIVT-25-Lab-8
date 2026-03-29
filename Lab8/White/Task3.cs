@@ -1,153 +1,157 @@
-using System.Xml.Linq;
+using System;
 
-namespace Lab8.White
+namespace Lab7.White
 {
     public class Task3
     {
+        
         public class Student
         {
-            //поля
+            
             private string _name;
             private string _surname;
-            protected int _skipped;
-            protected int[] _marks;
+            protected int[] _grades;      
+            protected int _misses;         
 
-            //свойства
+            
             public string Name => _name;
             public string Surname => _surname;
-            public int Skipped => _skipped;
+            public int[] Grades => _grades;
+            public int Misses => _misses;
 
-
-            public double AverageMark
-            {
-                get
-                {
-                    if (_marks == null || _marks.Length == 0)
-                        return 0;
-                    double average = 0;
-                    for (int i = 0; i < _marks.Length; i++)
-                    {
-                        average += _marks[i];
-                    }
-                    average = average / _marks.Length;
-                    return average;
-                }
-            }
-            //конструктор
+            
             public Student(string name, string surname)
             {
                 _name = name;
                 _surname = surname;
-
+                _grades = new int[0]; // Пустой массив оценок
+                _misses = 0;
             }
 
-
-            //принимает объект студента и копирует его значения в соответствующие поля.
-            protected Student(Student student)
+            
+            protected Student(Student other)
             {
-                _name = student._name;
-                _surname = student._surname;
-                _skipped = student._skipped;
-                _marks = student._marks;
-            }
-
-
-
-            //метод
-            public void Lesson(int mark)
-            {
-                if (mark == 0)
+                if (other != null)
                 {
-                    _skipped++;
+                    _name = other._name;
+                    _surname = other._surname;
+                    _misses = other._misses;
+
+                    // Копируем массив оценок
+                    _grades = new int[other._grades.Length];
+                    for (int i = 0; i < other._grades.Length; i++)
+                    {
+                        _grades[i] = other._grades[i];
+                    }
                 }
                 else
                 {
-                    //если массив не сущ создаем пустой
-                    if (_marks == null)
-                        _marks = new int[0];
-
-                    Array.Resize(ref _marks, _marks.Length + 1);
-                    _marks[_marks.Length - 1] = mark;
+                    _name = "";
+                    _surname = "";
+                    _grades = new int[0];
+                    _misses = 0;
                 }
-
             }
-            public static void SortBySkipped(Student[] array)
+
+            // Метод для добавления оценки
+            public void Lesson(int grade)
             {
-                if (array == null || array.Length == 0)
-                    return;
-                for (int i = 0; i < array.Length; i++)
+                // Увеличиваем массив оценок
+                int[] newGrades = new int[_grades.Length + 1];
+                for (int i = 0; i < _grades.Length; i++)
                 {
-                    for (int j = 1; j < array.Length; j++)
+                    newGrades[i] = _grades[i];
+                }
+                newGrades[_grades.Length] = grade;
+                _grades = newGrades;
+            }
+
+            // Метод для добавления пропуска
+            public void Miss()
+            {
+                _misses++;
+            }
+
+            // Метод для вывода информации
+            public virtual void Print()
+            {
+                Console.WriteLine($"Студент: {_name} {_surname}");
+                Console.WriteLine($"Пропуски: {_misses}");
+                Console.Write("Оценки: ");
+                if (_grades.Length > 0)
+                {
+                    for (int i = 0; i < _grades.Length; i++)
                     {
-                        if (array[j - 1].Skipped < array[j].Skipped)
-                        {
-                            (array[j - 1], array[j]) = (array[j], array[j - 1]);
-                        }
+                        Console.Write(_grades[i] + " ");
                     }
                 }
+                else
+                {
+                    Console.Write("нет оценок");
+                }
+                Console.WriteLine();
             }
-            public void Print()
-            {
-                Console.WriteLine(_name);
-                Console.WriteLine(_surname);
-                Console.WriteLine(_skipped);
-                Console.WriteLine(_marks);
-                Console.WriteLine(AverageMark);
-            }
-
         }
+
+        // Класс-наследник Undergraduate
         public class Undergraduate : Student
         {
-
+            
             public Undergraduate(string name, string surname) : base(name, surname)
             {
-
             }
 
+            // Конструктор, принимающий объект студента 
             public Undergraduate(Student student) : base(student)
             {
-
             }
 
-            //получить новую оценку по предмету вместо одного пропуска. Если пропусков нет, то заменить
-            //имеющуюся оценку 2 на новую оценку
+            // Метод для отработки пропуска 
             public void WorkOff(int mark)
             {
-                if (_skipped > 0)
+                if (_misses > 0)
                 {
-                    //есть пропуски, заменяем один пропуск на оценку
-                    _skipped--;
+                    // Если есть пропуски - уменьшаем их количество и добавляем оценку
+                    _misses--;
                     Lesson(mark);
-
                 }
                 else
-
                 {
-                    // пропусков нет, ищем оценку 2 и заменяем её
-                    for (int i = 0; i < _marks.Length; i++)
+                    // Если пропусков нет - ищем оценку 2 и заменяем её на новую
+                    for (int i = 0; i < _grades.Length; i++)
                     {
-                        if (_marks[i] == 2)
+                        if (_grades[i] == 2)
                         {
-                            _marks[i] = mark;
-                            return;
-
-
+                            _grades[i] = mark;
+                            return; // Заменили первую найденную двойку и выходим
                         }
                     }
+                    // Если двоек нет, просто добавляем новую оценку
+                    Lesson(mark);
                 }
-
             }
-            public new void Print()
+
+            
+            public override void Print()
             {
-
-                Console.WriteLine(_skipped);
-                Console.WriteLine(_marks);
-                Console.WriteLine(WorkOff);
-
+                
+                Console.WriteLine($"Имя: {Name} {Surname}");
+                Console.WriteLine($"Пропуски: {_misses}");
+                Console.Write("Оценки: ");
+                if (_grades.Length > 0)
+                {
+                    for (int i = 0; i < _grades.Length; i++)
+                    {
+                        Console.Write(_grades[i] + " ");
+                    }
+                }
+                else
+                {
+                    Console.Write("нет оценок");
+                }
+                Console.WriteLine();
+                Console.WriteLine("=");
             }
-
         }
-
-
     }
 }

@@ -86,12 +86,7 @@ namespace Lab8.Green
             }
             public void Print()
             {
-                Console.WriteLine($"Фамилия: {_surname}");
-                Console.WriteLine($"Группа: {_group}");
-                Console.WriteLine($"Тренер: {_trainer}");
-                Console.WriteLine($"Результат: {_result}");
-                Console.WriteLine($"Прошла норматив: {HasPassed}");
-                Console.WriteLine();
+                return;
             }
             
         }

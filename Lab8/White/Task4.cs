@@ -1,8 +1,6 @@
 using System;
 
-namespace Lab7.White
-{
-    public class Task4
+ public class Task4
     {
         public class Human
         {
@@ -101,4 +99,4 @@ namespace Lab7.White
             }
         }
     }
-}
+

@@ -172,22 +172,13 @@ namespace Lab8.Purple
             {
                 if (jumper == null || _judges == null || _judges.Length == 0) return;
 
-                // Создаем массив для оценок от всех судей (7 оценок)
                 int[] jumpMarks = new int[7];
 
-                // Каждый судья выставляет свою оценку
                 for (int i = 0; i < 7 && i < _judges.Length; i++)
                 {
                     jumpMarks[i] = _judges[i].CreateMark();
                 }
-
-                // Если судей меньше 7, заполняем оставшиеся оценки нулями или случайными значениями
-                for (int i = _judges.Length; i < 7; i++)
-                {
-                    jumpMarks[i] = 0; // или можно использовать Random
-                }
-
-                // Передаем оценки участнику для выполнения прыжка
+а
                 jumper.Jump(jumpMarks);
             }
             public void Add(Participant participants)

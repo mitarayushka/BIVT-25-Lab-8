@@ -82,10 +82,18 @@ namespace Lab8.Green
                     }
                 }
             }
-            public static void SortByAverageMark(Student[] array) // метод для сортировки массива
-                                                                  //  в порядке убывания среднего балла.
+            public static void SortByAverageMark(Student[] array)
             {
-                Array.Sort(array, (a, b) => b.AverageMark.CompareTo(a.AverageMark)); // от b к a
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    for (int j = 0; j < array.Length - 1 - i; j++)
+                    {
+                        if (array[j].AverageMark < array[j + 1].AverageMark)
+                        {
+                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        }
+                    }
+                }
             }
             public void Restore() // меняет статус студента с “отчисленного” на “не отчисленного”.
             {

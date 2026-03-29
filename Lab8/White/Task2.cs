@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lab7.White
-{
+
     public class Task2
     {
         public class Participant
@@ -128,4 +127,4 @@ namespace Lab7.White
             }
         }
     }
-}
+

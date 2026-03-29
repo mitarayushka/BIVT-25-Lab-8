@@ -139,4 +139,3 @@ namespace Lab8.White
 
     }
 }
-}

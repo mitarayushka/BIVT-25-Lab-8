@@ -1,0 +1,57 @@
+2026-03-29T20:33:18.5538477+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.6.2+88f8ce447cd12b629fcfe5e61d80dcc0c8cab8ec
+2026-03-29T20:33:18.5626583+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-03-29T20:33:18.5636287+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-03-29T20:33:18.5636317+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 20:33:18.533
+2026-03-29T20:33:18.5647614+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 20268
+2026-03-29T20:33:18.5648470+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 8.0.22
+2026-03-29T20:33:18.5648574+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.22\System.Private.CoreLib.dll
+2026-03-29T20:33:18.5648676+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-03-29T20:33:18.5648726+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Lab8Test.dll
+2026-03-29T20:33:18.5650242+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Log --client-port 50365'
+2026-03-29T20:33:18.5660032+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-03-29T20:33:18.5830445+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-03-29T20:33:18.5937160+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable:  VSTest mode: False
+2026-03-29T20:33:18.7057626+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: 'MSTestExtension' Version: '3.8.2' DisplayName: 'MSTest' Description: 'MSTest Framework for Microsoft Testing Platform'
+2026-03-29T20:33:18.7135511+00:00 Microsoft.Testing.Extensions.VSTestBridge.ObjectModel.MessageLoggerAdapter WARNING Runsettings datacollectors are not supported by Microsoft.Testing.Platform and will be ignored
+2026-03-29T20:33:18.7324038+00:00 mstest-trace INFORMATION MSTestExecutor.RunTests: Running tests from sources.
+2026-03-29T20:33:18.7356713+00:00 mstest-trace INFORMATION CollectSourceInformation value found : True 
+2026-03-29T20:33:18.7633415+00:00 mstest-trace INFORMATION MSTestDiscoverer: Found 46 tests from source F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Lab8Test.dll
+2026-03-29T20:33:18.7882574+00:00 mstest-trace INFORMATION Created unit-test runner F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Lab8Test.dll
+2026-03-29T20:33:18.7929233+00:00 Microsoft.Testing.Extensions.VSTestBridge.ObjectModel.MessageLoggerAdapter INFORMATION Test Parallelization enabled for F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Lab8Test.dll (Workers: 1, Scope: MethodLevel)
+2026-03-29T20:33:18.8001223+00:00 mstest-trace INFORMATION Executing test Test_00_OOP
+2026-03-29T20:33:18.8363885+00:00 mstest-trace INFORMATION Executed test Test_00_OOP
+2026-03-29T20:33:18.8399556+00:00 mstest-trace INFORMATION Executing test Test_01_CreateManSportsmen
+2026-03-29T20:33:18.8420732+00:00 mstest-trace INFORMATION Executed test Test_01_CreateManSportsmen
+2026-03-29T20:33:18.8421625+00:00 mstest-trace INFORMATION Executing test Test_01_CreateWomanSportsmen
+2026-03-29T20:33:18.8433219+00:00 mstest-trace INFORMATION Executed test Test_01_CreateWomanSportsmen
+2026-03-29T20:33:18.8433896+00:00 mstest-trace INFORMATION Executing test Test_02_InitManSportsmen
+2026-03-29T20:33:18.8447395+00:00 mstest-trace INFORMATION Executed test Test_02_InitManSportsmen
+2026-03-29T20:33:18.8448090+00:00 mstest-trace INFORMATION Executing test Test_02_InitWomanSportsmen
+2026-03-29T20:33:18.8459805+00:00 mstest-trace INFORMATION Executed test Test_02_InitWomanSportsmen
+2026-03-29T20:33:18.8460537+00:00 mstest-trace INFORMATION Executing test Test_03_SetManPlaces
+2026-03-29T20:33:18.8472275+00:00 mstest-trace INFORMATION Executed test Test_03_SetManPlaces
+2026-03-29T20:33:18.8473002+00:00 mstest-trace INFORMATION Executing test Test_03_SetWomanPlaces
+2026-03-29T20:33:18.8484148+00:00 mstest-trace INFORMATION Executed test Test_03_SetWomanPlaces
+2026-03-29T20:33:18.8484811+00:00 mstest-trace INFORMATION Executing test Test_04_CreateManTeams
+2026-03-29T20:33:18.8504189+00:00 mstest-trace INFORMATION Executed test Test_04_CreateManTeams
+2026-03-29T20:33:18.8505099+00:00 mstest-trace INFORMATION Executing test Test_04_CreateWomanTeams
+2026-03-29T20:33:18.8521211+00:00 mstest-trace INFORMATION Executed test Test_04_CreateWomanTeams
+2026-03-29T20:33:18.8521957+00:00 mstest-trace INFORMATION Executing test Test_05_FillManTeams
+2026-03-29T20:33:18.8555675+00:00 mstest-trace INFORMATION Executed test Test_05_FillManTeams
+2026-03-29T20:33:18.8556384+00:00 mstest-trace INFORMATION Executing test Test_05_FillWomanTeams
+2026-03-29T20:33:18.8568762+00:00 mstest-trace INFORMATION Executed test Test_05_FillWomanTeams
+2026-03-29T20:33:18.8569466+00:00 mstest-trace INFORMATION Executing test Test_06_FillManyManTeams
+2026-03-29T20:33:18.8583214+00:00 mstest-trace INFORMATION Executed test Test_06_FillManyManTeams
+2026-03-29T20:33:18.8583921+00:00 mstest-trace INFORMATION Executing test Test_06_FillManyWomanTeams
+2026-03-29T20:33:18.8595602+00:00 mstest-trace INFORMATION Executed test Test_06_FillManyWomanTeams
+2026-03-29T20:33:18.8596323+00:00 mstest-trace INFORMATION Executing test Test_07_SortMan
+2026-03-29T20:33:18.8610728+00:00 mstest-trace INFORMATION Executed test Test_07_SortMan
+2026-03-29T20:33:18.8611483+00:00 mstest-trace INFORMATION Executing test Test_07_SortWoman
+2026-03-29T20:33:18.8622996+00:00 mstest-trace INFORMATION Executed test Test_07_SortWoman
+2026-03-29T20:33:18.8623772+00:00 mstest-trace INFORMATION Executing test Test_08_GetTeamStrength
+2026-03-29T20:33:18.8639057+00:00 mstest-trace INFORMATION Executed test Test_08_GetTeamStrength
+2026-03-29T20:33:18.8641385+00:00 mstest-trace INFORMATION Executing test Test_09_GetManChampion
+2026-03-29T20:33:18.8653578+00:00 mstest-trace INFORMATION Executed test Test_09_GetManChampion
+2026-03-29T20:33:18.8654398+00:00 mstest-trace INFORMATION Executing test Test_09_GetWomanChampion
+2026-03-29T20:33:18.8676796+00:00 mstest-trace INFORMATION Executed test Test_09_GetWomanChampion
+2026-03-29T20:33:18.8679897+00:00 mstest-trace INFORMATION Executed tests belonging to source F:\UE_projects\BIVT-25-Lab-8\Lab8Test\bin\Debug\net8.0\Lab8Test.dll

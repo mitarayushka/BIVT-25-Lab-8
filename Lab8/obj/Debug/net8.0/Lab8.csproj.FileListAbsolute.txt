@@ -1,0 +1,15 @@
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.exe
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.deps.json
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.runtimeconfig.json
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.dll
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\bin\Debug\net8.0\Lab8.pdb
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.AssemblyInfoInputs.cache
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.AssemblyInfo.cs
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.csproj.CoreCompileInputs.cache
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.sourcelink.json
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.dll
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\refint\Lab8.dll
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.pdb
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\Lab8.genruntimeconfig.cache
+C:\Users\root\Source\Repos\BIVT-25-Lab-8\Lab8\obj\Debug\net8.0\ref\Lab8.dll

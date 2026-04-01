@@ -1,6 +1,7 @@
 using System;
 
-
+namespace Lab8.White
+{
     public class Task5
     {
         public struct Match
@@ -191,4 +192,4 @@ using System;
                 Console.WriteLine();
             }
         }  }
-    
+}

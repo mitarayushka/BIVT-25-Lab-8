@@ -1,0 +1,15 @@
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/bin/Debug/net8.0/Lab8
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/bin/Debug/net8.0/Lab8.deps.json
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/bin/Debug/net8.0/Lab8.runtimeconfig.json
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/bin/Debug/net8.0/Lab8.dll
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/bin/Debug/net8.0/Lab8.pdb
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.AssemblyInfoInputs.cache
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.AssemblyInfo.cs
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.csproj.CoreCompileInputs.cache
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.sourcelink.json
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.dll
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/refint/Lab8.dll
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.pdb
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/Lab8.genruntimeconfig.cache
+/Users/shulezhenkov/Documents/C#/BIVT-25-Lab-8/Lab8/obj/Debug/net8.0/ref/Lab8.dll

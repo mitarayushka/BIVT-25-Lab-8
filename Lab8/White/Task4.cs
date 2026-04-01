@@ -1,5 +1,6 @@
 using System;
-
+namespace Lab8.White
+{
  public class Task4
     {
         public class Human
@@ -99,4 +100,4 @@ using System;
             }
         }
     }
-
+}

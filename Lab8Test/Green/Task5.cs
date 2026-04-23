@@ -1,39 +1,39 @@
-﻿//using System.Reflection;
-//using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 
-//namespace Lab8Test.Green
-//{
-//    [TestClass]
-//    public sealed class Task5
-//    {
-//        record InputStudent(string Name, string Surname, int[] Marks);
-//        record InputGroup(string Name, InputStudent[] Students);
-//        record OutputGroup(string Name, double AverageMark);
+namespace Lab8Test.Green
+{
+   [TestClass]
+   public sealed class Task5
+   {
+       record InputStudent(string Name, string Surname, int[] Marks);
+       record InputGroup(string Name, InputStudent[] Students);
+       record OutputGroup(string Name, double AverageMark);
 
-//        private InputGroup[] _inputGroups;
-//        private OutputGroup[] _outputBase;
-//        private OutputGroup[] _outputElite;
-//        private OutputGroup[] _outputSpecial;
+       private InputGroup[] _inputGroups;
+       private OutputGroup[] _outputBase;
+       private OutputGroup[] _outputElite;
+       private OutputGroup[] _outputSpecial;
 
-//        private Lab8.Green.Task5.Student[] _students;
-//        private Lab8.Green.Task5.Group[] _groups;
+       private Lab8.Green.Task5.Student[] _students;
+       private Lab8.Green.Task5.Group[] _groups;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory())
-//                                  .Parent.Parent.Parent.FullName;
-//            folder = Path.Combine(folder, "Lab8Test", "Green");
+       [TestInitialize]
+       public void LoadData()
+       {
+           var folder = Directory.GetParent(Directory.GetCurrentDirectory())
+                                 .Parent.Parent.Parent.FullName;
+           folder = Path.Combine(folder, "Lab8Test", "Green");
 
-//            var input = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "input.json")))!;
-//            var output = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "output.json")))!;
+           var input = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "input.json")))!;
+           var output = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "output.json")))!;
 
-//            _inputGroups = input.GetProperty("Task5").Deserialize<InputGroup[]>();
+           _inputGroups = input.GetProperty("Task5").Deserialize<InputGroup[]>();
 
-//            _outputBase = output.GetProperty("Task5").GetProperty("Base").Deserialize<OutputGroup[]>();
-//            _outputElite = output.GetProperty("Task5").GetProperty("Elite").Deserialize<OutputGroup[]>();
+           _outputBase = output.GetProperty("Task5").GetProperty("Base").Deserialize<OutputGroup[]>();
+           _outputElite = output.GetProperty("Task5").GetProperty("Elite").Deserialize<OutputGroup[]>();
 //            _outputSpecial = output.GetProperty("Task5").GetProperty("Special").Deserialize<OutputGroup[]>();
 
 //            _students = _inputGroups

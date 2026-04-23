@@ -1,39 +1,39 @@
-﻿//using System.Reflection;
-//using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 
-//namespace Lab8Test.Green
-//{
-//    [TestClass]
-//    public sealed class Task4
-//    {
-//        record InputRow(string Name, string Surname, double[] Jumps);
-//        record OutputRow(string Name, string Surname, double BestJump);
+namespace Lab8Test.Green
+{
+   [TestClass]
+   public sealed class Task4
+   {
+       record InputRow(string Name, string Surname, double[] Jumps);
+       record OutputRow(string Name, string Surname, double BestJump);
 
-//        private InputRow[] _input;
-//        private OutputRow[] _outputSorted;
+       private InputRow[] _input;
+       private OutputRow[] _outputSorted;
 
-//        private Lab8.Green.Task4.Participant[] _participants;
-//        private Lab8.Green.Task4.Discipline _longJump;
-//        private Lab8.Green.Task4.Discipline _highJump;
+       private Lab8.Green.Task4.Participant[] _participants;
+       private Lab8.Green.Task4.Discipline _longJump;
+       private Lab8.Green.Task4.Discipline _highJump;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory())
-//                .Parent.Parent.Parent.FullName;
-//            folder = Path.Combine(folder, "Lab8Test", "Green");
+       [TestInitialize]
+       public void LoadData()
+       {
+           var folder = Directory.GetParent(Directory.GetCurrentDirectory())
+               .Parent.Parent.Parent.FullName;
+           folder = Path.Combine(folder, "Lab8Test", "Green");
 
-//            var input = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "input.json")))!;
-//            var output = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "output.json")))!;
+           var input = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "input.json")))!;
+           var output = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "output.json")))!;
 
-//            _input = input.GetProperty("Task4").Deserialize<InputRow[]>()!;
-//            _outputSorted = output.GetProperty("Task4").GetProperty("Sorted").Deserialize<OutputRow[]>()!;
+           _input = input.GetProperty("Task4").Deserialize<InputRow[]>()!;
+           _outputSorted = output.GetProperty("Task4").GetProperty("Sorted").Deserialize<OutputRow[]>()!;
 
-//            _participants = new Lab8.Green.Task4.Participant[_input.Length];
-//            _longJump = new Lab8.Green.Task4.LongJump();
-//            _highJump = new Lab8.Green.Task4.HighJump();
+           _participants = new Lab8.Green.Task4.Participant[_input.Length];
+           _longJump = new Lab8.Green.Task4.LongJump();
+           _highJump = new Lab8.Green.Task4.HighJump();
 //        }
 //        [TestMethod]
 //        public void Test_00_OOP()

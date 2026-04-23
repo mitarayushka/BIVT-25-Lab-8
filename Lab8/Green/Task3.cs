@@ -1,6 +1,5 @@
 namespace Lab8.Green
 {
-    {
     public class Task3
     {
         public class Student

@@ -1,4 +1,3 @@
-namespace Lab8.Green
 using System.Xml.Linq;
 
 namespace Lab8.Green

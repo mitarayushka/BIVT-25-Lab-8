@@ -1,39 +1,39 @@
-﻿//using System.Reflection;
-//using System.Security.AccessControl;
-//using System.Text.Json;
+﻿using System.Reflection;
+using System.Security.AccessControl;
+using System.Text.Json;
 
-//namespace Lab8Test.Green
-//{
-//    [TestClass]
-//    public sealed class Task2
-//    {
-//        record InputRow(string Name, string Surname, int[] Marks);
-//        record OutputRow(string Name, string Surname, double AverageMark, bool IsExcellent);
+namespace Lab8Test.Green
+{
+   [TestClass]
+   public sealed class Task2
+   {
+       record InputRow(string Name, string Surname, int[] Marks);
+       record OutputRow(string Name, string Surname, double AverageMark, bool IsExcellent);
 
-//        private InputRow[] _input;
-//        private OutputRow[] _output;
-//        private Lab8.Green.Task2.Student[] _students;
+       private InputRow[] _input;
+       private OutputRow[] _output;
+       private Lab8.Green.Task2.Student[] _students;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory())
-//                .Parent.Parent.Parent.FullName;
-//            folder = Path.Combine(folder, "Lab8Test", "Green");
+       [TestInitialize]
+       public void LoadData()
+       {
+           var folder = Directory.GetParent(Directory.GetCurrentDirectory())
+               .Parent.Parent.Parent.FullName;
+           folder = Path.Combine(folder, "Lab8Test", "Green");
 
-//            var input = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "input.json")))!;
-//            var output = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(Path.Combine(folder, "output.json")))!;
+           var input = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "input.json")))!;
+           var output = JsonSerializer.Deserialize<JsonElement>(
+               File.ReadAllText(Path.Combine(folder, "output.json")))!;
 
-//            _input = input.GetProperty("Task2").Deserialize<InputRow[]>()!;
-//            _output = output.GetProperty("Task2").Deserialize<OutputRow[]>()!;
+           _input = input.GetProperty("Task2").Deserialize<InputRow[]>()!;
+           _output = output.GetProperty("Task2").Deserialize<OutputRow[]>()!;
 
-//            _students = new Lab8.Green.Task2.Student[_input.Length];
-//        }
+           _students = new Lab8.Green.Task2.Student[_input.Length];
+       }
 
-//        [TestMethod]
-//        public void Test_00_OOP()
+       [TestMethod]
+       public void Test_00_OOP()
 //        {
 //            var human = typeof(Lab8.Green.Task2.Human);
 //            var student = typeof(Lab8.Green.Task2.Student);
